@@ -1,13 +1,14 @@
 $(document).ready(function(){
+	$("body").append('<div id="shScrollTop" class="sh-scrolltop"><div class="sh-arrow"></div></div>');
 	$(window).scroll(function(){
 		if ($(this).scrollTop() > 100) {
-			$('.scrolltop').fadeIn();
+			$('#shScrollTop').fadeIn();
 		} else {
-			$('.scrolltop').fadeOut();
+			$('#shScrollTop').fadeOut();
 		}
 	});
 	
-	$('.scrolltop').click(function(){
+	$('#shScrollTop').click(function(){
 		$('html, body').animate({scrollTop : 0},800);
 		return false;
 	});
