@@ -2,15 +2,34 @@
 /* color and hover and opacity */
 .scrolltop{
 	background-color: rgba(98, 138, 199, 1.0);
-	opacity: 0.8;
+	opacity: 0.3;
 }
 
 .scrolltop:hover{
 	background-color: rgba(103, 153, 232, 1.0);
-	opacity: 0.9;
+	opacity: 0.7 !important;
 }
 
+
 /* normal size */
+.scrolltop {
+	height: 60px;
+	width: 60px;
+	bottom: 35px;
+	right: 20px;
+}
+.scrolltop-arrow {
+	padding: 10px;
+	height: 60px;
+}
+.scrolltop-arrow:before, .scrolltop-arrow:after {
+	top: 25px;
+	height: 8px;
+}
+
+
+/* big size */
+/*
 .scrolltop {
 	width: 70px;
 	height: 70px;
@@ -27,8 +46,10 @@
 	top: 30px;
 	height: 8px;
 }
+*/
 
-/* big size
+/* bigger size */
+/*
 .scrolltop{
 	width: 80px;
 	height: 80px;
@@ -45,25 +66,8 @@
 }
 */
 
-/* small size */
 @media ( max-width : 992px) {
-	.scrolltop {
-		height: 60px;
-		width: 60px;
-		bottom: 35px;
-		right: 20px;
-	}
-	.scrolltop-arrow {
-		padding: 10px;
-		height: 60px;
-	}
-	.scrolltop-arrow:before, .scrolltop-arrow:after {
-		top: 25px;
-		height: 8px;
-	}
-}
-/* x small size */
-@media ( max-width : 600px) {
+	/* small size */
 	.scrolltop {
 		height: 50px;
 		width: 50px;
