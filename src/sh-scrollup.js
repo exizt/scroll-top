@@ -1,11 +1,12 @@
 document.addEventListener("DOMContentLoaded",()=>{
-	drawArrow()
+	drawShape()
 
 	const sel = "#shScrollTop"
 	let last_known_scroll_position = 0
-	let ticking = false,displaying = false
+	let ticking = false
+	let displaying = false
 	window.addEventListener('scroll', (e)=>{
-		last_known_scroll_position = window.scrollY;
+		last_known_scroll_position = scrollY();
 
 		if (!ticking) {
 		  window.requestAnimationFrame(()=>{
@@ -17,7 +18,12 @@ document.addEventListener("DOMContentLoaded",()=>{
 		}
 	});
 
-	function drawArrow(){
+	let d = document.querySelector(sel)
+	d.addEventListener('click',()=>{
+		scrollToTop()
+	})
+
+	function drawShape(){
 		let html = '<div id="shScrollTop" class="sh-scrolltop"><div class="sh-arrow"></div></div>'
 		let d = document.querySelector("body")
 		d.insertAdjacentHTML('beforeend', html);
@@ -42,15 +48,22 @@ document.addEventListener("DOMContentLoaded",()=>{
 		}
 	}
 	
-	let d = document.querySelector(sel)
-	d.addEventListener('click',()=>{
-		scrollToTop()
-	})
+
+	// https://developer.mozilla.org/ko/docs/Web/API/Window/scrollY
+	function scrollY(){
+		var supportPageOffset = window.pageXOffset !== undefined;
+		var isCSS1Compat = ((document.compatMode || "") === "CSS1Compat");
+		var y = supportPageOffset ? window.pageYOffset : isCSS1Compat ? document.documentElement.scrollTop : document.body.scrollTop;
+
+		return y;
+	}
 
 	// https://stackoverflow.com/a/48942924
 	const scrollToTop = () => {
-		const c = document.documentElement.scrollTop || document.body.scrollTop;
-		if (c > 0) {
+		//const c = document.documentElement.scrollTop || document.body.scrollTop;
+		const c = scrollY()
+
+		if (c > 10) {
 		  window.requestAnimationFrame(scrollToTop);
 		  window.scrollTo(0, c - c / 8);
 		}
