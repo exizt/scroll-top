@@ -1,4 +1,5 @@
 const path = require("path");
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
   entry: "./src/sh-scrollup.js",
@@ -20,5 +21,13 @@ module.exports = {
       }
     ]
   },
+  plugins: [
+    new CopyWebpackPlugin([
+      {
+        from: 'src/css',
+        to: 'css'
+      }
+    ])
+  ],
   mode: "production"
 };

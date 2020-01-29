@@ -1,3 +1,4 @@
+/*! scrollup v1.0.0 */
 document.addEventListener("DOMContentLoaded",()=>{
 	drawShape()
 
