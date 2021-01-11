@@ -77,6 +77,8 @@ document.addEventListener("DOMContentLoaded",()=>{
 		if (c > 10) {
 		  window.requestAnimationFrame(scrollToTop);
 		  window.scrollTo(0, c - c / 8);
+		} else {
+			window.scrollTo(0, 0);
 		}
 	  };
 
