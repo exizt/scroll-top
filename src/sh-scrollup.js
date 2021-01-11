@@ -1,8 +1,13 @@
 /*! scrollup v1.0.0 */
 document.addEventListener("DOMContentLoaded",()=>{
-	drawShape()
+	
+	// 스크롤 기준점
+	const scroll_base = 100
+	// selector
+	const scrolltopId = "shScrollTop"
 
-	const sel = "#shScrollTop"
+	// 도형
+	drawShape()
 	let last_known_scroll_position = 0
 	let ticking = false
 	let displaying = false
@@ -19,36 +24,41 @@ document.addEventListener("DOMContentLoaded",()=>{
 		}
 	});
 
-	let d = document.querySelector(sel)
+	let d = document.getElementById(scrolltopId)
 	d.addEventListener('click',()=>{
 		scrollToTop()
 	})
 
-	function drawShape(){
-		let html = '<div id="shScrollTop" class="sh-scrolltop"><div class="sh-arrow"></div></div>'
-		let d = document.querySelector("body")
-		d.insertAdjacentHTML('beforeend', html);
-	}
-
-	// scroll event 에서 fadeIn, fadeOut 설정
+	/**
+	 * scroll event 에서 fadeIn, fadeOut 설정
+	 * @param int scroll_pos 
+	 */
 	function scrollEvent(scroll_pos) {
-		if(scroll_pos > 100){
+		if(scroll_pos > scroll_base){
 			if(displaying === false){
-				let d = document.querySelector(sel)
+				let d = document.getElementById(scrolltopId)
 				fadeIn(d, 0.3)
 				displaying = true;
 				//console.log("fadeIn");
 			}
 		} else {
 			if(displaying === true){
-				let d = document.querySelector(sel)
+				let d = document.getElementById(scrolltopId)
 				fadeOut(d)
 				displaying = false;
 				//console.log("fadeOut");
 			}			
 		}
 	}
-	
+
+	/**
+	 * 도형을 draw
+	 */
+	function drawShape(){
+		let html = `<div id="${scrolltopId}" class="sh-scrolltop" style="display:none"><div class="sh-arrow"></div></div>`
+		let d = document.querySelector("body")
+		d.insertAdjacentHTML('beforeend', html);
+	}
 
 	// https://developer.mozilla.org/ko/docs/Web/API/Window/scrollY
 	function scrollY(){
