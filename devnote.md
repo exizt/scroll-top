@@ -28,6 +28,9 @@ npm run babel-build => dist/sh-scrollup.js 생성
 
 
 
+# 버전 업
+* src/.js 파일에 버전 카운팅
+* gitflow 로 push
 
 
 

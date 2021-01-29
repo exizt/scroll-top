@@ -1,9 +1,13 @@
 "use strict";
 
-/*! scrollup v1.0.0 */
+/*! scrollup v1.0.2 */
 document.addEventListener("DOMContentLoaded", function () {
+  // 스크롤 기준점
+  var scroll_base = 100; // selector
+
+  var scrolltopId = "shScrollTop"; // 도형
+
   drawShape();
-  var sel = "#shScrollTop";
   var last_known_scroll_position = 0;
   var ticking = false;
   var displaying = false;
@@ -18,34 +22,41 @@ document.addEventListener("DOMContentLoaded", function () {
       ticking = true;
     }
   });
-  var d = document.querySelector(sel);
+  var d = document.getElementById(scrolltopId);
   d.addEventListener('click', function () {
     scrollToTop();
   });
-
-  function drawShape() {
-    var html = '<div id="shScrollTop" class="sh-scrolltop"><div class="sh-arrow"></div></div>';
-    var d = document.querySelector("body");
-    d.insertAdjacentHTML('beforeend', html);
-  } // scroll event 에서 fadeIn, fadeOut 설정
-
+  /**
+   * scroll event 에서 fadeIn, fadeOut 설정
+   * @param int scroll_pos 
+   */
 
   function scrollEvent(scroll_pos) {
-    if (scroll_pos > 100) {
+    if (scroll_pos > scroll_base) {
       if (displaying === false) {
-        var _d = document.querySelector(sel);
+        var _d = document.getElementById(scrolltopId);
 
         fadeIn(_d, 0.3);
         displaying = true; //console.log("fadeIn");
       }
     } else {
       if (displaying === true) {
-        var _d2 = document.querySelector(sel);
+        var _d2 = document.getElementById(scrolltopId);
 
         fadeOut(_d2);
         displaying = false; //console.log("fadeOut");
       }
     }
+  }
+  /**
+   * 도형을 draw
+   */
+
+
+  function drawShape() {
+    var html = "<div id=\"".concat(scrolltopId, "\" class=\"sh-scrolltop\" style=\"display:none\"><div class=\"sh-arrow\"></div></div>");
+    var d = document.querySelector("body");
+    d.insertAdjacentHTML('beforeend', html);
   } // https://developer.mozilla.org/ko/docs/Web/API/Window/scrollY
 
 
@@ -64,6 +75,8 @@ document.addEventListener("DOMContentLoaded", function () {
     if (c > 10) {
       window.requestAnimationFrame(scrollToTop);
       window.scrollTo(0, c - c / 8);
+    } else {
+      window.scrollTo(0, 0);
     }
   }; // https://www.ilearnjavascript.com/plainjs-fadein-fadeout/
 

@@ -1,4 +1,4 @@
-/*! scrollup v1.0.0 */
+/*! scrollup v1.0.2 */
 document.addEventListener("DOMContentLoaded",()=>{
 	
 	// 스크롤 기준점
