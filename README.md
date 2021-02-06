@@ -1,4 +1,4 @@
-# scroll-up
+# scroll-to-top
 
 
 
@@ -12,9 +12,8 @@ MIT License
 
 아래 두 개를 불러서 사용하면 됨.
 
-* dist/sh-scrollup.min.js
-
-* dist/css/sh-scrollup.css
+* dist/scroll-to-top.min.js
+* dist/scroll-to-top.min.css
 
 
 # 데모

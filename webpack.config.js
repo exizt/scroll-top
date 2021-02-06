@@ -1,10 +1,13 @@
 const path = require("path");
-const CopyWebpackPlugin = require('copy-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const TerserWebpackPlugin  = require("terser-webpack-plugin");
+const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 
 module.exports = {
-  entry: "./src/sh-scrollup.js",
+  mode: "production",  
+  entry: "./src/scroll-to-top.js",
   output: {
-    filename: "sh-scrollup.min.js",
+    filename: "scroll-to-top.min.js",
     path: path.resolve(__dirname + "/dist")
   },
   module: {
@@ -18,16 +21,23 @@ module.exports = {
             configFile: './.babelrc'
           }
         }
+      },
+      { 
+        test: /\.css$/, 
+        use : [MiniCssExtractPlugin.loader,'css-loader'] 
       }
     ]
   },
+  optimization: {
+    minimize: true,
+    minimizer: [
+      new TerserWebpackPlugin({}),
+      new OptimizeCSSAssetsPlugin()
+    ]
+  },  
   plugins: [
-    new CopyWebpackPlugin([
-      {
-        from: 'src/css',
-        to: 'css'
-      }
-    ])
-  ],
-  mode: "production"
+    new MiniCssExtractPlugin({ 
+      filename: 'scroll-to-top.min.css' 
+    })
+  ]
 };

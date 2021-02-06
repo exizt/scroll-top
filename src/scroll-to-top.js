@@ -1,4 +1,8 @@
-/*! scrollup v2.0.0 */
+/*! 
+* exizt/scroll-to-top v2.0.0 
+* Licensed under MIT
+*/
+import './css/scroll-to-top.css';
 document.addEventListener("DOMContentLoaded",()=>{
 	
 	// 아이콘이 생기는 기준점
