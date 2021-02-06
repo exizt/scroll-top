@@ -1,6 +1,6 @@
 {
-  "name": "exizt-scrolltop",
-  "version": "1.0.0",
+  "name": "exizt-scroll-to-top",
+  "version": "2.0.1",
   "description": "",
   "main": "scroll-to-top.js",
   "scripts": {
