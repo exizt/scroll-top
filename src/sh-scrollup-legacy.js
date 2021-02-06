@@ -1,9 +1,8 @@
-/*! scrollup v2.0.0 */
+/*! scrollup v1.0.2 */
 document.addEventListener("DOMContentLoaded",()=>{
 	
-	// 아이콘이 생기는 기준점
+	// 스크롤 기준점
 	const scroll_base = 100
-
 	// selector
 	const scrolltopId = "shScrollTop"
 
@@ -11,13 +10,11 @@ document.addEventListener("DOMContentLoaded",()=>{
 
 	// 도형
 	drawShape()
-
+	let last_known_scroll_position = 0
 	let ticking = false
 	let displaying = false
 	window.addEventListener('scroll', (e)=>{
-		if(typeof requestAnimationFrame !== 'function') return
-				
-		let last_known_scroll_position = scrollY();
+		last_known_scroll_position = scrollY();
 
 		if (!ticking) {
 		  window.requestAnimationFrame(()=>{
@@ -29,21 +26,10 @@ document.addEventListener("DOMContentLoaded",()=>{
 		}
 	});
 
-	document.getElementById(scrolltopId).addEventListener('click',()=>{
-		// https://stackoverflow.com/questions/15935318/smooth-scroll-to-top/48942924
-		// https://developer.mozilla.org/en-US/docs/Web/API/ScrollToOptions/behavior
-		// behavior는 explorer 에서는 안 됨
-		window.scrollTo({top:0, behavior: "smooth"})
+	let d = document.getElementById(scrolltopId)
+	d.addEventListener('click',()=>{
+		scrollToTop()
 	})
-
-	/**
-	 * 도형을 draw
-	 */
-	function drawShape(){
-		let html = `<div id="${scrolltopId}" class="sh-scrolltop" style="display:none"><div class="sh-arrow"></div></div>`
-		let d = document.querySelector("body")
-		d.insertAdjacentHTML('beforeend', html);
-	}
 
 	/**
 	 * scroll event 에서 fadeIn, fadeOut 설정
@@ -67,14 +53,36 @@ document.addEventListener("DOMContentLoaded",()=>{
 		}
 	}
 
+	/**
+	 * 도형을 draw
+	 */
+	function drawShape(){
+		let html = `<div id="${scrolltopId}" class="sh-scrolltop" style="display:none"><div class="sh-arrow"></div></div>`
+		let d = document.querySelector("body")
+		d.insertAdjacentHTML('beforeend', html);
+	}
+
 	// https://developer.mozilla.org/ko/docs/Web/API/Window/scrollY
 	function scrollY(){
-		let supportPageOffset = window.pageXOffset !== undefined;
-		let isCSS1Compat = ((document.compatMode || "") === "CSS1Compat");
-		let y = supportPageOffset ? window.pageYOffset : isCSS1Compat ? document.documentElement.scrollTop : document.body.scrollTop;
-		return y;
+		var supportPageOffset = window.pageXOffset !== undefined;
+		var isCSS1Compat = ((document.compatMode || "") === "CSS1Compat");
+		var y = supportPageOffset ? window.pageYOffset : isCSS1Compat ? document.documentElement.scrollTop : document.body.scrollTop;
 
+		return y;
 	}
+
+	// https://stackoverflow.com/a/48942924
+	const scrollToTop = () => {
+		//const c = document.documentElement.scrollTop || document.body.scrollTop;
+		const c = scrollY()
+		if(isDebug) console.log(c)
+		if (c > 10) {
+		  window.requestAnimationFrame(scrollToTop);
+		  window.scrollTo(0, c - c / 8);
+		} else {
+			window.scrollTo(0, 0);
+		}
+	  };
 
 	// https://www.ilearnjavascript.com/plainjs-fadein-fadeout/
 	const fadeIn = (el, opacity = 1, smooth = true, displayStyle = 'block') => {
