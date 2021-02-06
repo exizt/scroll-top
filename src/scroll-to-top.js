@@ -1,10 +1,9 @@
-/*! 
-* exizt/scroll-to-top v2.0.0 
+/*!
+* exizt/scroll-to-top v2.0.1
 * Licensed under MIT
 */
-import './css/scroll-to-top.css';
 document.addEventListener("DOMContentLoaded",()=>{
-	
+
 	// 아이콘이 생기는 기준점
 	const scroll_base = 100
 
@@ -20,7 +19,7 @@ document.addEventListener("DOMContentLoaded",()=>{
 	let displaying = false
 	window.addEventListener('scroll', (e)=>{
 		if(typeof requestAnimationFrame !== 'function') return
-				
+
 		let last_known_scroll_position = scrollY();
 
 		if (!ticking) {
@@ -28,7 +27,7 @@ document.addEventListener("DOMContentLoaded",()=>{
 			scrollEvent(last_known_scroll_position);
 			ticking = false;
 		  });
-	  
+
 		  ticking = true;
 		}
 	});
@@ -51,7 +50,7 @@ document.addEventListener("DOMContentLoaded",()=>{
 
 	/**
 	 * scroll event 에서 fadeIn, fadeOut 설정
-	 * @param int scroll_pos 
+	 * @param int scroll_pos
 	 */
 	function scrollEvent(scroll_pos) {
 		if(scroll_pos > scroll_base){
@@ -67,7 +66,7 @@ document.addEventListener("DOMContentLoaded",()=>{
 				fadeOut(d)
 				displaying = false;
 				//console.log("fadeOut");
-			}			
+			}
 		}
 	}
 
@@ -87,7 +86,7 @@ document.addEventListener("DOMContentLoaded",()=>{
 		if (smooth) {
 			let c_opacity = 0;
 			let request;
-	
+
 			const animation = () => {
 				el.style.opacity = c_opacity += 0.02;
 				if (c_opacity >= opacity) {
@@ -95,23 +94,23 @@ document.addEventListener("DOMContentLoaded",()=>{
 					cancelAnimationFrame(request);
 				}
 			};
-	
+
 			const rAf = () => {
 				request = requestAnimationFrame(rAf);
 				animation();
 			};
 			rAf();
-	
+
 		} else {
 			el.style.opacity = 1;
 		}
 	};
-	
+
 	const fadeOut = (el, smooth = true, displayStyle = 'none') => {
 		if (smooth) {
 			let opacity = el.style.opacity;
 			let request;
-	
+
 			const animation = () => {
 				el.style.opacity = opacity -= 0.04;
 				if (opacity <= 0) {
@@ -120,16 +119,15 @@ document.addEventListener("DOMContentLoaded",()=>{
 					cancelAnimationFrame(request);
 				}
 			};
-	
+
 			const rAf = () => {
 					request = requestAnimationFrame(rAf);
 					animation();
 			};
 			rAf();
-	
+
 		} else {
 			el.style.opacity = 0;
 		}
 	};
 });
-
