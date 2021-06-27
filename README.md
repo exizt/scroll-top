@@ -20,7 +20,7 @@ MIT License
 ```html
 <script>
     document.addEventListener("DOMContentLoaded",()=>{
-        var scrolltotop = new shScrollToTop()
+        let scrolltotop = new shScrollToTop()
     })
 </script>
 ```
@@ -52,4 +52,4 @@ https://exizt.github.io/scroll-to-top/
 * scroll-to-top(.min).js - ie11 미지원. 
 * scroll-to-top.es5(.min).js - ie11 지원. es5로 빌드됨.
 
-ie10, ie9 는 확인하지 않음
+ie10, ie9 는 확인되지 않음
