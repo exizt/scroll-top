@@ -1,25 +1,39 @@
 # 개발 관련 노트
 
+가끔식 해줄 일
+* `npm update`
 
 
-아래의 두 파일을 작업 한 후에 
-* src/scroll-to-top.js
-* src/css/scroll-to-top.css
+# 빌드
+esnext 버전
+* `npm run build` : tsc + minify
+  * `npm run tsc` : ts -> js
+  * `npm run minify` : js -> min.js
 
 
-`npm run build` 커맨드 실행
-* src/scroll-to-top.js => dist/scroll-to-top.min.js
-* src/css/scroll-to-top.css => dist/scroll-to-top.min.css
+es5 버전 (support ie11)
+* `npm run build.legacy` : tsc (es5.js) + minify (es5.min.js)
+  * `npm run tsc.legacy` : ts -> es5.js
+  * `npm run minify.legacy` : es5.js -> es5.min.js
 
 
-참고로 babel, webpack 을 위한 npm update 도 간간히 해줄 필요 있음. (크게 중요치는 않음)
-
-# 버전 변경시
-1. js 파일의 상단 버전 변경
-2. package.json 에서 버전 변경
+css 컴파일
+* `npm run build.css` : cs -> min.css
 
 
-# 특이점
+# 버저닝
+1. major : 대대적 변경.
+2. minor : ts 코드에 사소한 변경.
+3. build : 의존성 변경, 환경 변경으로 인한 업데이트. 또는 빌드.
+
+
+
+버전 변경 시 같이 작업할 사항
+1. package.json 에서 버전 변경
+2. ts 코드 상단에서 버전 변경
+
+
+# 특이사항
 
 중요한 것은 css 로 화살표 모양을 만들었다는 점이다. 그 외에는 그냥 동작을 위한 스크립트. 
 

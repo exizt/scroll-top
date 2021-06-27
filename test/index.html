@@ -8,6 +8,11 @@
     integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
 <link rel="stylesheet" href="../dist/scroll-to-top.min.css">
 <script src="../dist/scroll-to-top.min.js"></script>
+<script>
+  document.addEventListener("DOMContentLoaded",()=>{
+      let scrolltotop = new shScrollToTop()
+  })
+</script>
 <body>
   <div style="background-color:#628AC7;" class="py-5">
       <div class="container my-5">
@@ -37,9 +42,6 @@
     html += htmlItem;
   }
   document.getElementById("origin").insertAdjacentHTML('afterend', html);
-  </script>
-  <script>
-    var s = new shScrollToTop()
   </script>
 </body>
 </html>
