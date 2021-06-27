@@ -4,7 +4,6 @@
 * Licensed under MIT
 *      Git : https://github.com/exizt/scroll-to-top
 *   Author : EXIZT
-* Modified : 2021.02
 */
 document.addEventListener("DOMContentLoaded",()=>{
 
