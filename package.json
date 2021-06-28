@@ -16,7 +16,7 @@
     "type": "git",
     "url": "git+https://github.com/exizt/scroll-to-top.git"
   },
-  "author": "",
+  "author": "EXIzT",
   "license": "MIT",
   "homepage": "https://exizt.github.io/scroll-to-top/",
   "devDependencies": {
