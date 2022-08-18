@@ -14,13 +14,15 @@ class shScrollToTop {
 
 	constructor(){
 		// 화살표를 draw
-		this.drawShape()
+		this.insertArrowHTML()
 
 		// scroll 리스너를 등록
 		window.addEventListener('scroll', (e)=>{
+			// requestAnimationFrame은 ie10 이상
+			// https://developer.mozilla.org/ko/docs/Web/API/Window/requestAnimationFrame
 			if(typeof requestAnimationFrame !== 'function') return
 
-			let last_known_scroll_position = this.scrollY();
+			let last_known_scroll_position = this.getScrollY();
 	
 			if (!this.ticking) {
 			  window.requestAnimationFrame(()=>{
@@ -42,7 +44,7 @@ class shScrollToTop {
 	}
 
 	/**
-	 * scroll 하는 메소드.
+	 * 상단으로 스크롤.
 	 */
 	scrollToTop(){
 		
@@ -50,10 +52,12 @@ class shScrollToTop {
 		const supportsNativeSmoothScroll = 'scrollBehavior' in document.documentElement.style;
 		
 		if (supportsNativeSmoothScroll) {
+			///// 모던 브라우저의 경우
 			// https://developer.mozilla.org/en-US/docs/Web/API/ScrollToOptions/behavior
 			// behavior는 explorer 에서는 안 됨(ie11 에서도 안 됨)
 			window.scrollTo({top:0, behavior: "smooth"})
 		} else {
+			///// 예전 브라우저의 경우
 			// https://stackoverflow.com/questions/15935318/smooth-scroll-to-top/48942924
 			// https://stackoverflow.com/questions/42261524/how-to-window-scrollto-with-a-smooth-effect
 
@@ -68,21 +72,23 @@ class shScrollToTop {
 					window.scrollTo(0, 0);
 				}
 			}
-			smoothScroll(this.scrollY())
+			smoothScroll(this.getScrollY())
 		}
 	}
 
 	/**
-	 * 도형을 draw
+	 * 화살표를 표시하는 html 요소를 추가
 	 */
-	drawShape(){
-		let html = `<div id="${this.arrowId}" class="sh-scrolltop" style="display:none"><div class="sh-arrow"></div></div>`
+	insertArrowHTML(){
+		let html = `<div class="st-scrolltop-wrap"><div id="${this.arrowId}" class="scrolltop" style="display:none">
+		<div class="arrow"></div>
+	  </div></div>`
 		document.querySelector("body")?.insertAdjacentHTML('beforeend', html);
 	}
 
 	/**
 	 * scroll event 에서 fadeIn, fadeOut 설정
-	 * @param int scroll_pos
+	 * @param scroll_pos scroll_pos
 	 */
 	scrollEvent(scroll_pos:number) {
 		if(scroll_pos > this.scrollBase){
@@ -107,10 +113,10 @@ class shScrollToTop {
 	 * https://developer.mozilla.org/ko/docs/Web/API/Window/scrollY
 	 * @returns number
 	 */
-	scrollY(){
-		let supportPageOffset = window.pageXOffset !== undefined;
-		let isCSS1Compat = ((document.compatMode || "") === "CSS1Compat");
-		let y:number = supportPageOffset ? window.pageYOffset : isCSS1Compat ? document.documentElement.scrollTop : document.body.scrollTop;
+	getScrollY(){
+		const isSupportPageOffset = window.pageXOffset !== undefined;
+		const isCSS1Compat = ((document.compatMode || "") === "CSS1Compat");
+		const y:number = isSupportPageOffset ? window.pageYOffset : isCSS1Compat ? document.documentElement.scrollTop : document.body.scrollTop;
 		return y;
 	}
 

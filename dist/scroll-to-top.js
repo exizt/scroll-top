@@ -1,6 +1,6 @@
 "use strict";
 /*!
-* exizt/scroll-to-top v3.0.4
+* exizt/scroll-to-top v3.0.5
 *
 *  License : MIT
 *      Git : https://github.com/exizt/scroll-to-top
@@ -71,7 +71,9 @@ class shScrollToTop {
      */
     drawShape() {
         var _a;
-        let html = `<div id="${this.arrowId}" class="sh-scrolltop" style="display:none"><div class="sh-arrow"></div></div>`;
+        let html = `<div class="st-scrolltop-wrap"><div id="${this.arrowId}" class="scrolltop" style="display:none">
+		<div class="arrow"></div>
+	  </div></div>`;
         (_a = document.querySelector("body")) === null || _a === void 0 ? void 0 : _a.insertAdjacentHTML('beforeend', html);
     }
     /**

@@ -1,6 +1,6 @@
 "use strict";
 /*!
-* exizt/scroll-to-top v3.0.4
+* exizt/scroll-to-top v3.0.5
 *
 *  License : MIT
 *      Git : https://github.com/exizt/scroll-to-top
@@ -16,12 +16,13 @@ var shScrollToTop = /** @class */ (function () {
         this.arrowId = "shScrollTop";
         this.isDebug = false;
         // 화살표를 draw
-        this.drawShape();
+        this.insertArrowHTML();
         // scroll 리스너를 등록
         window.addEventListener('scroll', function (e) {
+            // 구 브라우저는 지원하지 않게 변경함. 여기서는 그냥 취소시킴.
             if (typeof requestAnimationFrame !== 'function')
                 return;
-            var last_known_scroll_position = _this.scrollY();
+            var last_known_scroll_position = _this.getScrollY();
             if (!_this.ticking) {
                 window.requestAnimationFrame(function () {
                     _this.scrollEvent(last_known_scroll_position);
@@ -39,17 +40,19 @@ var shScrollToTop = /** @class */ (function () {
         });
     }
     /**
-     * scroll 하는 메소드.
+     * 상단으로 스크롤.
      */
     shScrollToTop.prototype.scrollToTop = function () {
         // https://stackoverflow.com/questions/52276194/window-scrollto-with-options-not-working-on-microsoft-edge
         var supportsNativeSmoothScroll = 'scrollBehavior' in document.documentElement.style;
         if (supportsNativeSmoothScroll) {
+            ///// 모던 브라우저의 경우
             // https://developer.mozilla.org/en-US/docs/Web/API/ScrollToOptions/behavior
             // behavior는 explorer 에서는 안 됨(ie11 에서도 안 됨)
             window.scrollTo({ top: 0, behavior: "smooth" });
         }
         else {
+            ///// 예전 브라우저의 경우
             // https://stackoverflow.com/questions/15935318/smooth-scroll-to-top/48942924
             // https://stackoverflow.com/questions/42261524/how-to-window-scrollto-with-a-smooth-effect
             var smoothScroll_1 = function (h) {
@@ -64,20 +67,20 @@ var shScrollToTop = /** @class */ (function () {
                     window.scrollTo(0, 0);
                 }
             };
-            smoothScroll_1(this.scrollY());
+            smoothScroll_1(this.getScrollY());
         }
     };
     /**
-     * 도형을 draw
+     * 화살표를 표시하는 html 요소를 추가
      */
-    shScrollToTop.prototype.drawShape = function () {
+    shScrollToTop.prototype.insertArrowHTML = function () {
         var _a;
-        var html = "<div id=\"" + this.arrowId + "\" class=\"sh-scrolltop\" style=\"display:none\"><div class=\"sh-arrow\"></div></div>";
+        var html = "<div class=\"st-scrolltop-wrap\"><div id=\"".concat(this.arrowId, "\" class=\"scrolltop\" style=\"display:none\">\n\t\t<div class=\"arrow\"></div>\n\t  </div></div>");
         (_a = document.querySelector("body")) === null || _a === void 0 ? void 0 : _a.insertAdjacentHTML('beforeend', html);
     };
     /**
      * scroll event 에서 fadeIn, fadeOut 설정
-     * @param int scroll_pos
+     * @param scroll_pos scroll_pos
      */
     shScrollToTop.prototype.scrollEvent = function (scroll_pos) {
         if (scroll_pos > this.scrollBase) {
@@ -102,10 +105,10 @@ var shScrollToTop = /** @class */ (function () {
      * https://developer.mozilla.org/ko/docs/Web/API/Window/scrollY
      * @returns number
      */
-    shScrollToTop.prototype.scrollY = function () {
-        var supportPageOffset = window.pageXOffset !== undefined;
+    shScrollToTop.prototype.getScrollY = function () {
+        var isSupportPageOffset = window.pageXOffset !== undefined;
         var isCSS1Compat = ((document.compatMode || "") === "CSS1Compat");
-        var y = supportPageOffset ? window.pageYOffset : isCSS1Compat ? document.documentElement.scrollTop : document.body.scrollTop;
+        var y = isSupportPageOffset ? window.pageYOffset : isCSS1Compat ? document.documentElement.scrollTop : document.body.scrollTop;
         return y;
     };
     /**
