@@ -19,7 +19,8 @@ var shScrollToTop = /** @class */ (function () {
         this.insertArrowHTML();
         // scroll 리스너를 등록
         window.addEventListener('scroll', function (e) {
-            // 구 브라우저는 지원하지 않게 변경함. 여기서는 그냥 취소시킴.
+            // requestAnimationFrame은 ie10 이상
+            // https://developer.mozilla.org/ko/docs/Web/API/Window/requestAnimationFrame
             if (typeof requestAnimationFrame !== 'function')
                 return;
             var last_known_scroll_position = _this.getScrollY();
@@ -85,27 +86,35 @@ var shScrollToTop = /** @class */ (function () {
     shScrollToTop.prototype.scrollEvent = function (scroll_pos) {
         if (scroll_pos > this.scrollBase) {
             if (this.displaying === false) {
-                var d = document.getElementById(this.arrowId);
-                this.fadeIn(d, 0.3);
+                var el = document.getElementById(this.arrowId);
+                this.fadeIn(el, 0.3);
                 this.displaying = true;
-                //console.log("fadeIn");
             }
         }
         else {
             if (this.displaying === true) {
-                var d = document.getElementById(this.arrowId);
-                this.fadeOut(d);
+                var el = document.getElementById(this.arrowId);
+                this.fadeOut(el);
                 this.displaying = false;
-                //console.log("fadeOut");
             }
         }
+    };
+    /**
+     * y 좌표를 구함
+     * (ie 9 이상)
+     * https://developer.mozilla.org/en-US/docs/Web/API/Window/scrollY
+     * @returns
+     */
+    shScrollToTop.prototype.getScrollY = function () {
+        return window.scrollY;
     };
     /**
      * y 좌표를 구하는 메소드
      * https://developer.mozilla.org/ko/docs/Web/API/Window/scrollY
      * @returns number
+     * @deprecated
      */
-    shScrollToTop.prototype.getScrollY = function () {
+    shScrollToTop.prototype.getScrollY_Legacy = function () {
         var isSupportPageOffset = window.pageXOffset !== undefined;
         var isCSS1Compat = ((document.compatMode || "") === "CSS1Compat");
         var y = isSupportPageOffset ? window.pageYOffset : isCSS1Compat ? document.documentElement.scrollTop : document.body.scrollTop;
