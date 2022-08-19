@@ -13,32 +13,35 @@ class shScrollToTop {
 	private isDebug = false
 
 	constructor(){
+		document.addEventListener("DOMContentLoaded",()=>{
+			this.load()
+		})
+	}
+
+	/**
+	 * 화살표 생성 및 이벤트 바인딩 등
+	 */
+	load(){
+		// requestAnimationFrame은 ie10 이상
+		// https://developer.mozilla.org/ko/docs/Web/API/Window/requestAnimationFrame
+		if(typeof requestAnimationFrame !== 'function') return
+		
 		// 화살표를 draw
 		this.insertArrowHTML()
 
 		// scroll 리스너를 등록
 		window.addEventListener('scroll', (e)=>{
-			// requestAnimationFrame은 ie10 이상
-			// https://developer.mozilla.org/ko/docs/Web/API/Window/requestAnimationFrame
-			if(typeof requestAnimationFrame !== 'function') return
-
-			let last_known_scroll_position = this.getScrollY();
-	
 			if (!this.ticking) {
-			  window.requestAnimationFrame(()=>{
-				this.scrollEvent(last_known_scroll_position);
-				this.ticking = false;
-			  });
-	
-			  this.ticking = true;
+				window.requestAnimationFrame(()=>{
+					this.scrollEvent(this.getScrollY())
+					this.ticking = false
+				})
+				this.ticking = true
 			}
 		});
 	
+		// 클릭 이벤트 바인딩
 		document.getElementById(this.arrowId)?.addEventListener('click',()=>{
-			// https://stackoverflow.com/questions/15935318/smooth-scroll-to-top/48942924
-			// https://developer.mozilla.org/en-US/docs/Web/API/ScrollToOptions/behavior
-			// behavior는 explorer 에서는 안 됨
-			//window.scrollTo({top:0, behavior: "smooth"})
 			this.scrollToTop()
 		})
 	}
@@ -47,22 +50,22 @@ class shScrollToTop {
 	 * 상단으로 스크롤.
 	 */
 	scrollToTop(){
-		
 		// https://stackoverflow.com/questions/52276194/window-scrollto-with-options-not-working-on-microsoft-edge
 		const supportsNativeSmoothScroll = 'scrollBehavior' in document.documentElement.style;
-		
 		if (supportsNativeSmoothScroll) {
 			///// 모던 브라우저의 경우
 			// https://developer.mozilla.org/en-US/docs/Web/API/ScrollToOptions/behavior
 			// behavior는 explorer 에서는 안 됨(ie11 에서도 안 됨)
-			window.scrollTo({top:0, behavior: "smooth"})
+			this.debugLog('scrollToTop(). behavior smooth.')
+			window.scroll({top:0, behavior: "smooth"})
 		} else {
 			///// 예전 브라우저의 경우
 			// https://stackoverflow.com/questions/15935318/smooth-scroll-to-top/48942924
 			// https://stackoverflow.com/questions/42261524/how-to-window-scrollto-with-a-smooth-effect
+			this.debugLog('scrollToTop(). smoothScroll().')
 
-			const smoothScroll = (h:any) => {
-				let i = h || 0;
+			const smoothScroll = (h:number) => {
+				const i = h || 0;
 				if (i > 10) {
 				  setTimeout(() => {
 					window.scrollTo(0, i);
@@ -80,28 +83,28 @@ class shScrollToTop {
 	 * 화살표를 표시하는 html 요소를 추가
 	 */
 	insertArrowHTML(){
-		let html = `<div class="st-scrolltop-wrap"><div id="${this.arrowId}" class="scrolltop" style="display:none">
+		const html = `<div class="st-scrolltop-wrap"><div id="${this.arrowId}" class="scrolltop" style="display:none">
 		<div class="arrow"></div>
 	  </div></div>`
-		document.querySelector("body")?.insertAdjacentHTML('beforeend', html);
+		document.querySelector("body")?.insertAdjacentHTML('beforeend', html)
 	}
 
 	/**
 	 * scroll event 에서 fadeIn, fadeOut 설정
-	 * @param scroll_pos scroll_pos
+	 * @param scrollY 스크롤 Y 좌표
 	 */
-	scrollEvent(scroll_pos:number) {
-		if(scroll_pos > this.scrollBase){
+	scrollEvent(scrollY:number) {
+		if(scrollY > this.scrollBase){
 			if(this.displaying === false){
 				const el = document.getElementById(this.arrowId)
 				this.fadeIn(el, 0.3)
-				this.displaying = true;
+				this.displaying = true
 			}
 		} else {
 			if(this.displaying === true){
 				const el = document.getElementById(this.arrowId)
 				this.fadeOut(el)
-				this.displaying = false;
+				this.displaying = false
 			}
 		}
 	}
@@ -130,33 +133,35 @@ class shScrollToTop {
 	}
 
 	/**
-	 * fadeIn 을 구현하는 메소드
+	 * fadeIn(천천히 나타남)을 구현하는 메소드
 	 * https://www.ilearnjavascript.com/plainjs-fadein-fadeout/
 	 * @param el 
-	 * @param opacity 
+	 * @param _opacity 
 	 * @param smooth 
 	 * @param displayStyle 
 	 */
-	fadeIn(el:any, opacity = 1, smooth = true, displayStyle = 'block') {
+	fadeIn(el:any, _opacity = 1, smooth = true, displayStyle = 'block') {
+		if(!!!el) return
 		el.style.opacity = 0;
 		el.style.display = displayStyle;
 		if (smooth) {
-			let c_opacity = 0;
-			let request:any;
+			let opacity = 0;
+			let request:number
 
 			const animation = () => {
-				el.style.opacity = c_opacity += 0.02;
-				if (c_opacity >= opacity) {
-					c_opacity = opacity;
-					cancelAnimationFrame(request);
+				opacity += 0.02
+				if (opacity >= _opacity) {
+					opacity = _opacity
+					cancelAnimationFrame(request)
 				}
-			};
+				el.style.opacity = opacity
+			}
 
 			const rAf = () => {
-				request = requestAnimationFrame(rAf);
-				animation();
-			};
-			rAf();
+				request = requestAnimationFrame(rAf)
+				animation()
+			}
+			rAf()
 
 		} else {
 			el.style.opacity = 1;
@@ -164,33 +169,44 @@ class shScrollToTop {
 	}
 
 	/**
-	 * fadeOut 을 구현하는 메소드
+	 * fadeOut(천천히 없어짐)을 구현하는 메소드
 	 * @param el 
 	 * @param smooth 
 	 * @param displayStyle 
 	 */
 	fadeOut(el:any, smooth = true, displayStyle = 'none'){
+		if(!!!el) return
 		if (smooth) {
 			let opacity = el.style.opacity;
-			let request:any;
+			let request:number
 
 			const animation = () => {
-				el.style.opacity = opacity -= 0.04;
+				opacity -= 0.04;
 				if (opacity <= 0) {
 					opacity = 0;
 					el.style.display = displayStyle;
 					cancelAnimationFrame(request);
 				}
-			};
+				el.style.opacity = opacity
+			}
 
 			const rAf = () => {
-					request = requestAnimationFrame(rAf);
-					animation();
-			};
-			rAf();
+				request = requestAnimationFrame(rAf)
+				animation()
+			}
+			rAf()
 
 		} else {
 			el.style.opacity = 0;
 		}
-	};
+	}
+
+	/**
+	 * 디버깅 로그
+	 * @param msg 디버깅 로그
+	 */
+	debugLog(msg:string){
+		if(this.isDebug) console.log('[ScrollTop] ', msg)
+	}
 }
+export default shScrollToTop
