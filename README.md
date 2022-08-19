@@ -17,14 +17,14 @@ https://exizt.github.io/scroll-to-top/
 ## 모던 브라우저 
 스크립트 로드
 ```html
-<script src="./dist/scroll-top.js"></script>
+<script src="scroll-top.js"></script>
 ```
 
 
 ## 예전 브라우저(IE11 등)
 스크립트 로드
 ```html
-<script src="../dist/scroll-top.legacy.js"></script>
+<script src="scroll-top.legacy.js"></script>
 ```
 
 데모 링크 : https://exizt.github.io/scroll-to-top/test/legacy-test.html
