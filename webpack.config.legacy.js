@@ -5,10 +5,14 @@ module.exports = {
     'scroll-top': path.resolve(__dirname, 'src/app.ts')
   },
   output: {
-    filename: '[name].js',
+    filename: '[name].legacy.js',
     path: path.resolve(__dirname, 'dist'),
     library: {
       type: 'umd'
+    },
+    environment: {
+      arrowFunction: false,
+      const: false,
     }
   },
   module: {
@@ -18,6 +22,9 @@ module.exports = {
         exclude: /node_modules/,
         use: {
           loader: 'ts-loader',
+          options: {
+            configFile: "tsconfig.legacy.json"
+          }
         }
       },
       {

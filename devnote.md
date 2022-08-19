@@ -46,7 +46,27 @@ css 컴파일
 1. legacy.min.js를 호출하면 ie등 예전 브라우저가 되게하고, 기본 min.js를 호출하면, 예전 브라우저에서는 아예 버그없이 동작되지 않도록 하기.
 
 
+# 프로젝트 셋팅
+1. `npm install` : `node_modules` 생성됨.
 
+
+## 프로젝트 구성 과정에서의 히스토리
+1. npm 셋팅
+    ```shell
+    npm install --save-dev typescript
+    npm install --save-dev webpack webpack-cli ts-loader
+    npm install --save-dev style-loader css-loader
+    ```
+    - `typescript` : 타입스크립트 기능
+    - `webpack`, `webpack-cli` : 웹팩 및 웹팩 cli
+    - `ts-loader` : 웹팩에서 typescript를 로드하는 웹팩 로더
+    - `style-loader`, `css-loader` : css파일을 병합하기 위한 웹팩 로더
+
+
+2. `tsconfig.json`설정. 
+    - `npx tsc --init` 또는 파일을 복사해옴
+
+3. `webpack.config.js` 복사 후 설정.
 
 
 

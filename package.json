@@ -1,24 +1,24 @@
 {
   "name": "exizt-scroll-top",
-  "version": "3.0.5",
+  "version": "4.0.6",
   "description": "",
-  "main": "scroll-top.js",
+  "main": "scroll-top.class.js",
   "scripts": {
-    "build": "npm run tsc & npm run minify",
-    "build.legacy": "npm run tsc.legacy && npm run minify.legacy",
-    "build.css": "npx clean-css-cli -o ./dist/scroll-top.min.css ./src/css/scroll-top.css",
+    "build": "npm run webpack && npm run webpack.legacy && npm run tsc.class",
     "tsc": "tsc",
-    "tsc.legacy": "tsc --project tsconfig.es5.json",
+    "tsc.class": "tsc ./src/scroll-top.ts --outfile ./dist/scroll-top.class.js --module amd",
     "minify": "npx uglifyjs ./dist/scroll-top.js --output ./dist/scroll-top.min.js --mangle",
+    "minify.css": "npx clean-css-cli -o ./dist/scroll-top.min.css ./src/css/scroll-top.css",
     "minify.legacy": "npx uglifyjs ./dist/scroll-top.es5.js --output ./dist/scroll-top.es5.min.js --mangle",
     "webpack": "npx webpack --mode production",
-    "webpack.dev": "npx webpack --mode development"
+    "webpack.dev": "npx webpack --mode development",
+    "webpack.legacy": "npx webpack --config webpack.config.legacy.js --mode production"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/exizt/scroll-to-top.git"
   },
-  "author": "EXIzT",
+  "author": "exizt",
   "license": "MIT",
   "homepage": "https://exizt.github.io/scroll-to-top/",
   "devDependencies": {
@@ -32,4 +32,3 @@
     "webpack-cli": "^4.10.0"
   }
 }
-

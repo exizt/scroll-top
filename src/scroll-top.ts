@@ -10,7 +10,7 @@ class shScrollToTop {
 	private ticking = false
 	private displaying = false
 	private arrowId = "shScrollTop"
-	private isDebug = false
+	private isDebug = true
 
 	constructor(){
 		document.addEventListener("DOMContentLoaded",()=>{
@@ -32,6 +32,7 @@ class shScrollToTop {
 		// scroll 리스너를 등록
 		window.addEventListener('scroll', (e)=>{
 			if (!this.ticking) {
+				// this.debugLog('scroll event')
 				window.requestAnimationFrame(()=>{
 					this.scrollEvent(this.getScrollY())
 					this.ticking = false
@@ -59,7 +60,7 @@ class shScrollToTop {
 			this.debugLog('scrollToTop(). behavior smooth.')
 			window.scroll({top:0, behavior: "smooth"})
 		} else {
-			///// 예전 브라우저의 경우
+			///// 예전 브라우저의 경우 (예: ie11)
 			// https://stackoverflow.com/questions/15935318/smooth-scroll-to-top/48942924
 			// https://stackoverflow.com/questions/42261524/how-to-window-scrollto-with-a-smooth-effect
 			this.debugLog('scrollToTop(). smoothScroll().')
@@ -94,6 +95,9 @@ class shScrollToTop {
 	 * @param scrollY 스크롤 Y 좌표
 	 */
 	scrollEvent(scrollY:number) {
+		if(typeof scrollY === 'undefined'){
+			this.debugLog(`scroll Y : ${scrollY}`)
+		}
 		if(scrollY > this.scrollBase){
 			if(this.displaying === false){
 				const el = document.getElementById(this.arrowId)
@@ -111,12 +115,13 @@ class shScrollToTop {
 	
 	/**
 	 * y 좌표를 구함
-	 * (ie 9 이상)
+	 * (ie 9 이상. ie에서는 window.pageYOffset을 이용함. 모던브라우저에서는 window.scrollY 또는 window.pageYOffset 이용)
 	 * https://developer.mozilla.org/en-US/docs/Web/API/Window/scrollY
 	 * @returns 
 	 */
 	getScrollY():number{
-		return window.scrollY
+		return window.pageYOffset
+		// return window.scrollY
 	}
 
 	/**
