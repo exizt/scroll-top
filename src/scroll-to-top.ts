@@ -93,27 +93,36 @@ class shScrollToTop {
 	scrollEvent(scroll_pos:number) {
 		if(scroll_pos > this.scrollBase){
 			if(this.displaying === false){
-				let d = document.getElementById(this.arrowId)
-				this.fadeIn(d, 0.3)
+				const el = document.getElementById(this.arrowId)
+				this.fadeIn(el, 0.3)
 				this.displaying = true;
-				//console.log("fadeIn");
 			}
 		} else {
 			if(this.displaying === true){
-				let d = document.getElementById(this.arrowId)
-				this.fadeOut(d)
+				const el = document.getElementById(this.arrowId)
+				this.fadeOut(el)
 				this.displaying = false;
-				//console.log("fadeOut");
 			}
 		}
+	}
+	
+	/**
+	 * y 좌표를 구함
+	 * (ie 9 이상)
+	 * https://developer.mozilla.org/en-US/docs/Web/API/Window/scrollY
+	 * @returns 
+	 */
+	getScrollY():number{
+		return window.scrollY
 	}
 
 	/**
 	 * y 좌표를 구하는 메소드
 	 * https://developer.mozilla.org/ko/docs/Web/API/Window/scrollY
 	 * @returns number
+	 * @deprecated
 	 */
-	getScrollY(){
+	getScrollY_Legacy(){
 		const isSupportPageOffset = window.pageXOffset !== undefined;
 		const isCSS1Compat = ((document.compatMode || "") === "CSS1Compat");
 		const y:number = isSupportPageOffset ? window.pageYOffset : isCSS1Compat ? document.documentElement.scrollTop : document.body.scrollTop;
