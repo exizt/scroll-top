@@ -1,5 +1,5 @@
 /*!
-* exizt/scroll-to-top v3.0.5
+* exizt/scroll-to-top v4.0.6
 * 
 *  License : MIT
 *      Git : https://github.com/exizt/scroll-to-top
