@@ -1,6 +1,7 @@
 define("scroll-top", ["require", "exports"], function (require, exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
+    exports.ScrollTop = void 0;
     /*!
     * exizt/scroll-to-top v4.0.6
     *
@@ -8,42 +9,41 @@ define("scroll-top", ["require", "exports"], function (require, exports) {
     *      Git : https://github.com/exizt/scroll-to-top
     *   Author : EXIzT
     */
-    class shScrollToTop {
+    class ScrollTop {
         constructor() {
             this.scrollBase = 100;
             this.ticking = false;
             this.displaying = false;
             this.arrowId = "shScrollTop";
             this.isDebug = true;
-            document.addEventListener("DOMContentLoaded", () => {
-                this.load();
-            });
         }
         /**
          * 화살표 생성 및 이벤트 바인딩 등
          */
         load() {
-            var _a;
-            // requestAnimationFrame은 ie10 이상
-            // https://developer.mozilla.org/ko/docs/Web/API/Window/requestAnimationFrame
-            if (typeof requestAnimationFrame !== 'function')
-                return;
-            // 화살표를 draw
-            this.insertArrowHTML();
-            // scroll 리스너를 등록
-            window.addEventListener('scroll', (e) => {
-                if (!this.ticking) {
-                    // this.debugLog('scroll event')
-                    window.requestAnimationFrame(() => {
-                        this.scrollEvent(this.getScrollY());
-                        this.ticking = false;
-                    });
-                    this.ticking = true;
-                }
-            });
-            // 클릭 이벤트 바인딩
-            (_a = document.getElementById(this.arrowId)) === null || _a === void 0 ? void 0 : _a.addEventListener('click', () => {
-                this.scrollToTop();
+            document.addEventListener("DOMContentLoaded", () => {
+                var _a;
+                // requestAnimationFrame은 ie10 이상
+                // https://developer.mozilla.org/ko/docs/Web/API/Window/requestAnimationFrame
+                if (typeof requestAnimationFrame !== 'function')
+                    return;
+                // 화살표를 draw
+                this.insertArrowHTML();
+                // scroll 리스너를 등록
+                window.addEventListener('scroll', (e) => {
+                    if (!this.ticking) {
+                        // this.debugLog('scroll event')
+                        window.requestAnimationFrame(() => {
+                            this.scrollEvent(this.getScrollY());
+                            this.ticking = false;
+                        });
+                        this.ticking = true;
+                    }
+                });
+                // 클릭 이벤트 바인딩
+                (_a = document.getElementById(this.arrowId)) === null || _a === void 0 ? void 0 : _a.addEventListener('click', () => {
+                    this.scrollToTop();
+                });
             });
         }
         /**
@@ -208,5 +208,5 @@ define("scroll-top", ["require", "exports"], function (require, exports) {
                 console.log('[ScrollTop] ', msg);
         }
     }
-    exports.default = shScrollToTop;
+    exports.ScrollTop = ScrollTop;
 });

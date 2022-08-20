@@ -5,7 +5,7 @@
 *      Git : https://github.com/exizt/scroll-to-top
 *   Author : EXIzT
 */
-class shScrollToTop {
+export class ScrollTop {
 	private scrollBase = 100
 	private ticking = false
 	private displaying = false
@@ -13,37 +13,36 @@ class shScrollToTop {
 	private isDebug = true
 
 	constructor(){
-		document.addEventListener("DOMContentLoaded",()=>{
-			this.load()
-		})
 	}
 
 	/**
 	 * 화살표 생성 및 이벤트 바인딩 등
 	 */
 	load(){
-		// requestAnimationFrame은 ie10 이상
-		// https://developer.mozilla.org/ko/docs/Web/API/Window/requestAnimationFrame
-		if(typeof requestAnimationFrame !== 'function') return
-		
-		// 화살표를 draw
-		this.insertArrowHTML()
+		document.addEventListener("DOMContentLoaded",()=>{
+			// requestAnimationFrame은 ie10 이상
+			// https://developer.mozilla.org/ko/docs/Web/API/Window/requestAnimationFrame
+			if(typeof requestAnimationFrame !== 'function') return
+			
+			// 화살표를 draw
+			this.insertArrowHTML()
 
-		// scroll 리스너를 등록
-		window.addEventListener('scroll', (e)=>{
-			if (!this.ticking) {
-				// this.debugLog('scroll event')
-				window.requestAnimationFrame(()=>{
-					this.scrollEvent(this.getScrollY())
-					this.ticking = false
-				})
-				this.ticking = true
-			}
-		});
-	
-		// 클릭 이벤트 바인딩
-		document.getElementById(this.arrowId)?.addEventListener('click',()=>{
-			this.scrollToTop()
+			// scroll 리스너를 등록
+			window.addEventListener('scroll', (e)=>{
+				if (!this.ticking) {
+					// this.debugLog('scroll event')
+					window.requestAnimationFrame(()=>{
+						this.scrollEvent(this.getScrollY())
+						this.ticking = false
+					})
+					this.ticking = true
+				}
+			});
+		
+			// 클릭 이벤트 바인딩
+			document.getElementById(this.arrowId)?.addEventListener('click',()=>{
+				this.scrollToTop()
+			})
 		})
 	}
 
@@ -214,4 +213,3 @@ class shScrollToTop {
 		if(this.isDebug) console.log('[ScrollTop] ', msg)
 	}
 }
-export default shScrollToTop

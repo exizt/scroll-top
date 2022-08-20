@@ -1,4 +1,5 @@
 import './css/scroll-top.css'
-import shScrollToTop from './scroll-top'
+import { ScrollTop } from '../src/scroll-top'
 
-const scrolltotop = new shScrollToTop()
+const scrolltop = new ScrollTop()
+scrolltop.load()
