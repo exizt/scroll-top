@@ -35,13 +35,18 @@
   font-size: inherit;
 }
 
-@media (max-width: 1200px) {
+@media (max-width: 2000px) {
   .st-scrolltop-wrap {
     font-size: 0.875rem;
   }
 }
-@media (max-width: 900px) {
+@media (max-width: 1200px) {
   .st-scrolltop-wrap {
     font-size: 0.75rem;
+  }
+}
+@media (max-width: 900px) {
+  .st-scrolltop-wrap {
+    font-size: 0.625rem;
   }
 }
