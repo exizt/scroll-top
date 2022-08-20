@@ -15,14 +15,18 @@ https://exizt.github.io/scroll-top/
 
 # 사용법
 ## 모던 브라우저 
-스크립트 로드
+
+1. 다운로드합니다. (Github: `Code` - `Download ZIP`)
+2. `dist/scroll-top.js` 파일을 이용합니다. 
 ```html
 <script src="scroll-top.js"></script>
 ```
 
 
-## 예전 브라우저(IE11 등)
-스크립트 로드
+## 예전 브라우저 지원이 필요한 경우 (IE11 등)
+
+1. 다운로드합니다. (Github: `Code` - `Download ZIP`)
+2. `dist/scroll-top.legacy.js` 파일을 이용합니다.
 ```html
 <script src="scroll-top.legacy.js"></script>
 ```
