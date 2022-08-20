@@ -10,7 +10,7 @@ MIT License
 
 # 데모
 
-https://exizt.github.io/scroll-to-top/
+https://exizt.github.io/scroll-top/
 
 
 # 사용법
@@ -27,7 +27,7 @@ https://exizt.github.io/scroll-to-top/
 <script src="scroll-top.legacy.js"></script>
 ```
 
-데모 링크 : https://exizt.github.io/scroll-to-top/test/legacy-test.html
+데모 링크 : https://exizt.github.io/scroll-top/test/legacy-test.html
 
 
 
