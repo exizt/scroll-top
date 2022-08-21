@@ -1,5 +1,5 @@
 {
-  "name": "@exizt/scroll-top",
+  "name": "exizt.scroll-top",
   "version": "4.0.8",
   "description": "",
   "main": "./dist/scroll-top.class.js",
