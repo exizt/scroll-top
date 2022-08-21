@@ -33,12 +33,13 @@
 $ npm install --save-dev typescript
 $ npm install --save-dev webpack webpack-cli ts-loader
 $ npm install --save-dev style-loader css-loader
+$ npm install --save-dev shx
 ```
 - `typescript` : 타입스크립트 기능
 - `webpack`, `webpack-cli` : 웹팩 및 웹팩 cli
 - `ts-loader` : 웹팩에서 typescript를 로드하는 웹팩 로더
 - `style-loader`, `css-loader` : css파일을 병합하기 위한 웹팩 로더
-
+- `shx` : 파일 복사, 파일 삭제 등을 크로스플랫폼으로 스크립트 가능하게 해주는 기능
 
 ## 설정 파일
 1. `tsconfig.json`설정. 

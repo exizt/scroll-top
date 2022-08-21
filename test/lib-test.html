@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="utf-8">
+  <title>기능 테스트</title>
+  <meta name="viewport"
+    content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width" />
+  <link rel="stylesheet" href="../dist/scroll-top.css">
+  <script type="module">
+    import { ScrollTop } from '../dist/scroll-top.js';
+    const scrolltop = new ScrollTop()
+    scrolltop.load()
+
+    document.addEventListener("DOMContentLoaded", () => {
+      document.querySelector("#unload").addEventListener("click", () => {
+        scrolltop.unload()
+      })
+
+      document.querySelector("#reload").addEventListener("click", () => {
+        scrolltop.load()
+      })
+
+      document.querySelector("#base_100").addEventListener("click", () => {
+        scrolltop.load({base:100, isDebug: true})
+      })
+
+      document.querySelector("#base_500").addEventListener("click", () => {
+        scrolltop.load({base:500, isDebug: true})
+      })
+    })
+  </script>
+</head>
+
+<body style="margin:0; background-color: #edf0f5;">
+  <div style="height:2500px;">
+    ScrollTop 기능 테스트
+    <div>
+      <button id="base_500">base 500</button>
+      <button id="base_100">base 100</button>  
+    </div>
+  </div>
+  <div>
+    <button id="unload">unload</button>
+    <button id="reload">reload</button>
+  </div>
+</body>
+
+</html>
