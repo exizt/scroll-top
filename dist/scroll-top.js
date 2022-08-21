@@ -1,30 +1,64 @@
 export class ScrollTop {
     constructor() {
         this.scrollBase = 100;
-        this.ticking = false;
-        this.displaying = false;
         this.arrowId = "shScrollTop";
-        this.isDebug = true;
+        this.displaying = false;
+        this.isDebug = false;
+        this.isLoaded = false;
+        this.isDomLoadedEventBinded = false;
+        this.ticking = false;
     }
-    load() {
-        document.addEventListener("DOMContentLoaded", () => {
-            var _a;
-            if (typeof requestAnimationFrame !== 'function')
-                return;
-            this.insertArrowHTML();
-            window.addEventListener('scroll', (e) => {
-                if (!this.ticking) {
-                    window.requestAnimationFrame(() => {
-                        this.scrollEvent(this.getScrollY());
-                        this.ticking = false;
-                    });
-                    this.ticking = true;
-                }
+    load(options) {
+        this.setOptions(options);
+        if (this.isLoaded)
+            return;
+        if (!this.isDomLoadedEventBinded) {
+            document.addEventListener("DOMContentLoaded", () => {
+                var _a;
+                if (typeof requestAnimationFrame !== 'function')
+                    return;
+                this.insertSymbolHTML();
+                this.scrollEventHandler = (e) => this.scrollAnimate();
+                window.addEventListener('scroll', this.scrollEventHandler);
+                (_a = document.getElementById(this.arrowId)) === null || _a === void 0 ? void 0 : _a.addEventListener('click', () => {
+                    this.scrollToTop();
+                });
             });
-            (_a = document.getElementById(this.arrowId)) === null || _a === void 0 ? void 0 : _a.addEventListener('click', () => {
-                this.scrollToTop();
+            this.isDomLoadedEventBinded = true;
+            this.isLoaded = true;
+        }
+        else {
+            window.addEventListener('scroll', this.scrollEventHandler);
+            this.isLoaded = true;
+        }
+    }
+    unload() {
+        if (!this.isLoaded)
+            return;
+        window.removeEventListener('scroll', this.scrollEventHandler);
+        this.isLoaded = false;
+        const el = document.getElementById(this.arrowId);
+        this.fadeOut(el, false);
+        this.displaying = false;
+    }
+    setOptions(options) {
+        if (!options)
+            return;
+        if (options.base) {
+            this.scrollBase = options.base;
+        }
+        if (options.isDebug) {
+            this.isDebug = options.isDebug;
+        }
+    }
+    scrollAnimate() {
+        if (!this.ticking) {
+            window.requestAnimationFrame(() => {
+                this.fadeInOutByScrollY(this.getScrollY());
+                this.ticking = false;
             });
-        });
+            this.ticking = true;
+        }
     }
     scrollToTop() {
         const supportsNativeSmoothScroll = 'scrollBehavior' in document.documentElement.style;
@@ -49,15 +83,18 @@ export class ScrollTop {
             smoothScroll(this.getScrollY());
         }
     }
-    insertArrowHTML() {
+    insertSymbolHTML() {
         var _a;
         const html = `<div class="st-scrolltop-wrap"><div id="${this.arrowId}" class="scrolltop" style="display:none">
 		<div class="arrow"></div>
 	  </div></div>`;
         (_a = document.querySelector("body")) === null || _a === void 0 ? void 0 : _a.insertAdjacentHTML('beforeend', html);
     }
-    scrollEvent(scrollY) {
+    fadeInOutByScrollY(scrollY) {
         if (typeof scrollY === 'undefined') {
+            this.debugLog(`scroll Y : ${scrollY}`);
+        }
+        else if (this.isDebug) {
             this.debugLog(`scroll Y : ${scrollY}`);
         }
         if (scrollY > this.scrollBase) {

@@ -1,0 +1,52 @@
+.st-scrolltop-wrap {
+  display: block;
+  font-size: 1rem;
+  box-sizing: border-box;
+}
+.st-scrolltop-wrap > .scrolltop {
+  background-color: rgb(98, 138, 199);
+  opacity: 0.3;
+  height: 3.75em;
+  width: 3.75em;
+  bottom: 2.18em;
+  right: 1.25em;
+  border-radius: 50%;
+  -webkit-border-radius: 50%;
+  position: fixed;
+  cursor: pointer;
+  text-align: center;
+  z-index: 9999;
+  box-sizing: inherit;
+  font-size: inherit;
+}
+.st-scrolltop-wrap > .scrolltop:hover {
+  background-color: rgb(103, 153, 232);
+  opacity: 0.7 !important;
+}
+.st-scrolltop-wrap > .scrolltop > .arrow {
+  border: solid white;
+  border-width: 0 0.2em 0.2em 0;
+  display: inline-block;
+  padding: 0.5em;
+  margin-top: 1.56em;
+  transform: rotate(-135deg);
+  -webkit-transform: rotate(-135deg);
+  box-sizing: inherit;
+  font-size: inherit;
+}
+
+@media (max-width: 2000px) {
+  .st-scrolltop-wrap {
+    font-size: 0.875rem;
+  }
+}
+@media (max-width: 1200px) {
+  .st-scrolltop-wrap {
+    font-size: 0.75rem;
+  }
+}
+@media (max-width: 900px) {
+  .st-scrolltop-wrap {
+    font-size: 0.625rem;
+  }
+}

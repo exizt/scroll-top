@@ -1,49 +1,106 @@
 /*!
-* exizt/scroll-to-top v4.0.6
+* exizt/scroll-top v4.2.13
 * 
 *  License : MIT
-*      Git : https://github.com/exizt/scroll-to-top
-*   Author : EXIzT
+*      Git : https://github.com/exizt/scroll-top
+*   Author : exizt
 */
 export class ScrollTop {
+	// 화살표가 나타나는 기준선
 	private scrollBase = 100
-	private ticking = false
-	private displaying = false
 	private arrowId = "shScrollTop"
-	private isDebug = true
+	private displaying = false
+	private isDebug = false
+	// (중복 방지 기능) 기능이 로드되었는지 여부 status. 
+	private isLoaded = false
+	// (중복 방지 기능) DOMContentLoaded 이벤트 바인딩 여부 status.
+	private isDomLoadedEventBinded = false
+	// (중복 방지 기능) animationFrame 중복 방지 status.
+	private ticking = false
+	// 이벤트 핸들러. add, remove를 위해 포인터를 지니기 위함.
+	private scrollEventHandler!: EventListener
 
 	constructor(){
 	}
 
 	/**
-	 * 화살표 생성 및 이벤트 바인딩 등
+	 * 이벤트 바인딩
 	 */
-	load(){
-		document.addEventListener("DOMContentLoaded",()=>{
-			// requestAnimationFrame은 ie10 이상
-			// https://developer.mozilla.org/ko/docs/Web/API/Window/requestAnimationFrame
-			if(typeof requestAnimationFrame !== 'function') return
-			
-			// 화살표를 draw
-			this.insertArrowHTML()
+	load(options?:IOptions): void {
+		// 옵션이 있을 경우 옵션값 지정
+		this.setOptions(options)
 
-			// scroll 리스너를 등록
-			window.addEventListener('scroll', (e)=>{
-				if (!this.ticking) {
-					// this.debugLog('scroll event')
-					window.requestAnimationFrame(()=>{
-						this.scrollEvent(this.getScrollY())
-						this.ticking = false
-					})
-					this.ticking = true
-				}
-			});
-		
-			// 클릭 이벤트 바인딩
-			document.getElementById(this.arrowId)?.addEventListener('click',()=>{
-				this.scrollToTop()
+		// 중복 로드 방지
+		if(this.isLoaded) return
+
+		if(!this.isDomLoadedEventBinded){
+			document.addEventListener("DOMContentLoaded",()=>{
+				// requestAnimationFrame은 ie10 이상
+				// https://developer.mozilla.org/ko/docs/Web/API/Window/requestAnimationFrame
+				if(typeof requestAnimationFrame !== 'function') return
+				
+				// 화살표를 draw
+				this.insertSymbolHTML()
+	
+				// scroll 리스너를 등록
+				this.scrollEventHandler = (e) => this.scrollAnimate()
+				window.addEventListener('scroll', this.scrollEventHandler)
+			
+				// 클릭 이벤트 바인딩
+				document.getElementById(this.arrowId)?.addEventListener('click',()=>{
+					this.scrollToTop()
+				})
 			})
-		})
+			this.isDomLoadedEventBinded = true
+			this.isLoaded = true
+		} else {
+			// scroll 리스너를 재등록
+			window.addEventListener('scroll', this.scrollEventHandler)
+			this.isLoaded = true
+		}
+	}
+
+	/**
+	 * 스크롤 이벤트 해제 등. 기능 정지.
+	 */
+	unload(): void {
+		// 스크롤 이벤트에서 해제
+		if(!this.isLoaded) return
+		window.removeEventListener('scroll', this.scrollEventHandler)
+		this.isLoaded = false
+
+		// 화살표시를 hidden 처리
+		const el = document.getElementById(this.arrowId)
+		this.fadeOut(el, false)
+		this.displaying = false
+	}
+
+	/**
+	 * 옵션값 지정
+	 * @param options 옵션값 JSON
+	 */
+	setOptions(options?:IOptions): void{
+		if(!options) return
+		if(options.base){
+			this.scrollBase = options.base
+		}
+		if(options.isDebug){
+			this.isDebug = options.isDebug
+		}
+	}
+
+	/**
+	 * 스크롤 이벤트 바인딩
+	 */
+	scrollAnimate(){
+		if (!this.ticking) {
+			// this.debugLog('scroll event')
+			window.requestAnimationFrame(()=>{
+				this.fadeInOutByScrollY(this.getScrollY())
+				this.ticking = false
+			})
+			this.ticking = true
+		}
 	}
 
 	/**
@@ -82,7 +139,7 @@ export class ScrollTop {
 	/**
 	 * 화살표를 표시하는 html 요소를 추가
 	 */
-	insertArrowHTML(){
+	insertSymbolHTML(){
 		const html = `<div class="st-scrolltop-wrap"><div id="${this.arrowId}" class="scrolltop" style="display:none">
 		<div class="arrow"></div>
 	  </div></div>`
@@ -93,8 +150,10 @@ export class ScrollTop {
 	 * scroll event 에서 fadeIn, fadeOut 설정
 	 * @param scrollY 스크롤 Y 좌표
 	 */
-	scrollEvent(scrollY:number) {
+	fadeInOutByScrollY(scrollY:number) {
 		if(typeof scrollY === 'undefined'){
+			this.debugLog(`scroll Y : ${scrollY}`)
+		} else if(this.isDebug){
 			this.debugLog(`scroll Y : ${scrollY}`)
 		}
 		if(scrollY > this.scrollBase){
@@ -116,7 +175,7 @@ export class ScrollTop {
 	 * y 좌표를 구함
 	 * (ie 9 이상. ie에서는 window.pageYOffset을 이용함. 모던브라우저에서는 window.scrollY 또는 window.pageYOffset 이용)
 	 * https://developer.mozilla.org/en-US/docs/Web/API/Window/scrollY
-	 * @returns 
+	 * @returns number
 	 */
 	getScrollY():number{
 		return window.pageYOffset
@@ -212,4 +271,8 @@ export class ScrollTop {
 	debugLog(msg:string){
 		if(this.isDebug) console.log('[ScrollTop] ', msg)
 	}
+}
+interface IOptions {
+	base: number;
+    isDebug: boolean;
 }
