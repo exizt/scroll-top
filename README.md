@@ -34,6 +34,42 @@ https://exizt.github.io/scroll-top/
 데모 링크 : https://exizt.github.io/scroll-top/test/legacy-test.html
 
 
+# 커스텀
+## 방법
+### html, js에서 이용할 때
+```html
+<link rel="stylesheet" href="../dist/scroll-top.css">
+<script type="module">
+  import { ScrollTop } from '../dist/scroll-top.js';
+  const scrolltop = new ScrollTop()
+  scrolltop.load()
+</script>
+```
+
+### npm, typescript에서 이용할 때
+npm 패키지 설치
+```console
+npm install --save-dev exizt.scroll-top
+```
+
+ts 파일에서
+```ts
+import { ScrollTop } from 'exizt.scroll-top'
+const scrolltop = new ScrollTop()
+scrolltop.load()
+```
+
+## 옵션
+예시)
+```js
+scrolltop.load({base:300})
+```
+
+옵션값
+| 옵션명 | 유형 | 기본값 | 설명 | 
+| --- | --- | --- | --- |
+| base | number | 100 | 화살표가 나타나는 지점 |
+
 
 # 브라우저 지원
 * scroll-top.js - ie11 미지원. 
