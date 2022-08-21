@@ -5,7 +5,7 @@ module.exports = {
     'scroll-top': path.resolve(__dirname, 'src/app.ts')
   },
   output: {
-    filename: '[name].js',
+    filename: '[name].min.js',
     path: path.resolve(__dirname, 'dist'),
     library: {
       type: 'umd'
