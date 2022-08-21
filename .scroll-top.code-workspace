@@ -6,6 +6,7 @@
 	],
 	"settings": {
 		"search.exclude": {
+			"**/.github/**": true,
 			"**/*.code-workspace": true,
 			"**/LICENSE": true,
 			"**/package-lock.json": true

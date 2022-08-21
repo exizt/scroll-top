@@ -1,12 +1,12 @@
 {
   "name": "exizt.scroll-top",
-  "version": "4.1.10",
+  "version": "4.1.11",
   "description": "",
   "main": "dist/scroll-top.js",
   "types": "dist/scroll-top.d.js",
   "scripts": {
     "build": "npm run webpack && npm run webpack.legacy && npm run tsc",
-    "tsc": "tsc ./src/scroll-top.ts --outfile ./dist/scroll-top.js --module amd --target es2016 --declaration",
+    "tsc": "tsc ./src/scroll-top.ts --outDir ./dist --target es2016 --declaration --removeComments",
     "minify": "npx uglifyjs ./dist/scroll-top.js --output ./dist/scroll-top.min.js --mangle",
     "minify.css": "npx clean-css-cli -o ./dist/scroll-top.min.css ./src/css/scroll-top.css",
     "minify.legacy": "npx uglifyjs ./dist/scroll-top.es5.js --output ./dist/scroll-top.es5.min.js --mangle",
