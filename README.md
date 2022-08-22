@@ -19,7 +19,7 @@ https://exizt.github.io/scroll-top/
 1. 다운로드합니다. (Github: `Code` - `Download ZIP`)
 2. `dist/scroll-top.min.js` 파일을 이용합니다. 
 ```html
-<script src="scroll-top.min.js"></script>
+<script type="module" src="scroll-top.min.js"></script>
 ```
 
 
@@ -67,7 +67,7 @@ scrolltop.load({base:300})
 
 옵션값
 | 옵션명 | 유형 | 기본값 | 설명 | 
-| --- | --- | --- | --- |
+| --- | --- | --- | :--- |
 | base | number | 100 | 화살표가 나타나는 지점 |
 
 
