@@ -60,6 +60,15 @@ $ npm install --save-dev shx
 
 
 
+<br><br>
+
+# ToDo
+- 스크롤 내리다가 클릭시 조금만 올라가고 멈추는 버그.
+
+
+
+<br><br>
+
 # Release note
 4.3.x
 - 브라우저 레거시 지원 제거
