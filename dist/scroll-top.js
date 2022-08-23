@@ -115,12 +115,6 @@ export class ScrollTop {
     getScrollY() {
         return window.pageYOffset;
     }
-    getScrollY_Legacy() {
-        const isSupportPageOffset = window.pageXOffset !== undefined;
-        const isCSS1Compat = ((document.compatMode || "") === "CSS1Compat");
-        const y = isSupportPageOffset ? window.pageYOffset : isCSS1Compat ? document.documentElement.scrollTop : document.body.scrollTop;
-        return y;
-    }
     fadeIn(el, _opacity = 1, smooth = true, displayStyle = 'block') {
         if (!!!el)
             return;

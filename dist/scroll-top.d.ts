@@ -16,7 +16,6 @@ export declare class ScrollTop {
     insertSymbolHTML(): void;
     fadeInOutByScrollY(scrollY: number): void;
     getScrollY(): number;
-    getScrollY_Legacy(): number;
     fadeIn(el: any, _opacity?: number, smooth?: boolean, displayStyle?: string): void;
     fadeOut(el: any, smooth?: boolean, displayStyle?: string): void;
     debugLog(msg: string): void;

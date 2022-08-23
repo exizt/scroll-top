@@ -183,19 +183,6 @@ export class ScrollTop {
 	}
 
 	/**
-	 * y 좌표를 구하는 메소드
-	 * https://developer.mozilla.org/ko/docs/Web/API/Window/scrollY
-	 * @returns number
-	 * @deprecated
-	 */
-	getScrollY_Legacy(){
-		const isSupportPageOffset = window.pageXOffset !== undefined;
-		const isCSS1Compat = ((document.compatMode || "") === "CSS1Compat");
-		const y:number = isSupportPageOffset ? window.pageYOffset : isCSS1Compat ? document.documentElement.scrollTop : document.body.scrollTop;
-		return y;
-	}
-
-	/**
 	 * fadeIn(천천히 나타남)을 구현하는 메소드
 	 * https://www.ilearnjavascript.com/plainjs-fadein-fadeout/
 	 * @param el 
