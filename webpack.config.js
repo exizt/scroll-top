@@ -2,10 +2,10 @@ const path = require('path');
 
 module.exports = {
   entry: {
-    'scroll-top': path.resolve(__dirname, 'src/app.ts')
+    'scroll-top': path.resolve(__dirname, 'src/mix.index.ts')
   },
   output: {
-    filename: '[name].min.js',
+    filename: '[name].mix.js',
     path: path.resolve(__dirname, 'dist'),
     library: {
       type: 'umd'
