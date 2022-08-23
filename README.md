@@ -14,24 +14,11 @@ https://exizt.github.io/scroll-top/
 
 
 # 사용법
-## 모던 브라우저 
-
 1. 다운로드합니다. (Github: `Code` - `Download ZIP`)
 2. `dist/scroll-top.min.js` 파일을 이용합니다. 
 ```html
 <script type="module" src="scroll-top.min.js"></script>
 ```
-
-
-## 예전 브라우저 지원이 필요한 경우 (IE11 등)
-
-1. 다운로드합니다. (Github: `Code` - `Download ZIP`)
-2. `dist/scroll-top.legacy.min.js` 파일을 이용합니다.
-```html
-<script src="scroll-top.legacy.min.js"></script>
-```
-
-데모 링크 : https://exizt.github.io/scroll-top/test/legacy-test.html
 
 
 # 커스텀
@@ -69,8 +56,3 @@ scrolltop.load({base:300})
 | 옵션명 | 유형 | 기본값 | 설명 | 
 | --- | --- | --- | :--- |
 | base | number | 100 | 화살표가 나타나는 지점 |
-
-
-# 브라우저 지원
-* scroll-top.js - ie11 미지원. 
-* scroll-top.legacy.js - ie11 지원.
