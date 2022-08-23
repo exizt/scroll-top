@@ -2,7 +2,7 @@
 * text=auto
 
 # Don't diff
-package-lock.json -diff
+package-lock.json text -diff
 
 # ignore github repo languages
 *.js linguist-vendored
