@@ -8,9 +8,12 @@
 <br><br>
 
 # 빌드
-* `npm run build` : js 생성 + legacy.js 생성
-    * `npm run webpack` : ts -> js (with minify)
-    * `npm run webpack.legacy` : ts -> legacy.js (with minify)
+- `npm run build` : tsc + webpack
+  - `npm run tsc` : ts -> js, d.ts
+  - `npm run webpack` : ts -> mix.js (css 포함)
+  - `npm run dist.css` : copy css to `/dist`
+  - `npm run make.ghpages` : 깃헙 페이지 관련
+- `npm run webpack.dev` : ts -> mix.js (dev 모드)
 
 
 
@@ -52,8 +55,11 @@ $ npm install --save-dev shx
 - `shx` : 파일 복사, 파일 삭제 등을 크로스플랫폼으로 스크립트 가능하게 해주는 기능
 
 ## 설정 파일
-1. `tsconfig.json`설정. 
-    - `npx tsc --init` 또는 파일을 복사해옴
+1. `tsconfig.json` : `npx tsc --init` 또는 파일을 복사해옴
 2. `webpack.config.js` 복사 후 설정.
 
 
+
+# Release note
+4.3.x
+- 브라우저 레거시 지원 제거

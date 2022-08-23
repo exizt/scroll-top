@@ -15,9 +15,9 @@ https://exizt.github.io/scroll-top/
 
 # 사용법
 1. 다운로드합니다. (Github: `Code` - `Download ZIP`)
-2. `dist/scroll-top.min.js` 파일을 이용합니다. 
+2. `dist/scroll-top.mix.js` 파일을 이용합니다. 
 ```html
-<script type="module" src="scroll-top.min.js"></script>
+<script type="module" src="scroll-top.mix.js"></script>
 ```
 
 
