@@ -1,5 +1,5 @@
-# Enforce Unix newlines
-* text=auto eol=lf
+# autocrlf
+* text=auto
 
 # Don't diff
 package-lock.json binary
