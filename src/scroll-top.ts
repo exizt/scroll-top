@@ -1,9 +1,9 @@
 /*!
-* exizt/scroll-top v4.2.13
+* ScrollTop
 * 
-*  License : MIT
-*      Git : https://github.com/exizt/scroll-top
-*   Author : exizt
+* License : MIT
+*     Git : https://github.com/exizt/scroll-top
+*  Author : exizt
 */
 export class ScrollTop {
 	// 화살표가 나타나는 기준선
