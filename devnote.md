@@ -63,7 +63,8 @@ $ npm install --save-dev shx
 <br><br>
 
 # ToDo
-- 스크롤 내리다가 클릭시 조금만 올라가고 멈추는 버그.
+- 스크롤 내리다가 클릭시 조금만 올라가고 멈추는 버그 
+  * => 해결 안 남. `window.scroll({top:0, behavior: "smooth"})` 구문에서 브라우저 버그인 듯함.
 
 
 
