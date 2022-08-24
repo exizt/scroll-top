@@ -16,7 +16,7 @@ export class ScrollTop {
 	// (중복 방지 기능) DOMContentLoaded 이벤트 바인딩 여부 status.
 	private isDomLoadedEventBinded = false
 	// (중복 방지 기능) animationFrame 중복 방지 status.
-	private ticking = false
+	private scheduledAnimationFrame = false
 	// 이벤트 핸들러. add, remove를 위해 포인터를 지니기 위함.
 	private scrollEventHandler!: EventListener
 
@@ -93,15 +93,16 @@ export class ScrollTop {
 	 * 스크롤 이벤트 바인딩
 	 */
 	scrollAnimate(){
-		if (!this.ticking) {
-			// this.debugLog('scroll event')
-			window.requestAnimationFrame(()=>{
-				this.fadeInOutByScrollY(this.getScrollY())
-				this.ticking = false
-			})
-			this.ticking = true
+		if (this.scheduledAnimationFrame) {
+			return
 		}
-		}
+		this.debugLog('scrollAnimate()', 'call requestAnimationFrame(fadeInOutByScrollY)')
+		// window.requestAnimationFrame
+		requestAnimationFrame(()=>{
+			this.fadeInOutByScrollY(this.getScrollY())
+			this.scheduledAnimationFrame = false
+		})
+		this.scheduledAnimationFrame = true
 	}
 
 	/**
