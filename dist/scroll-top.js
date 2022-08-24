@@ -1,26 +1,28 @@
 export class ScrollTop {
     constructor() {
         this.scrollBase = 100;
-        this.arrowId = "shScrollTop";
+        this.elementId = "shScrollTop";
         this.displaying = false;
         this.isDebug = false;
         this.isLoaded = false;
         this.isDomLoadedEventBinded = false;
-        this.ticking = false;
+        this.isRunningScrollRaf = false;
     }
     load(options) {
         this.setOptions(options);
         if (this.isLoaded)
             return;
+        if (typeof requestAnimationFrame !== 'function')
+            return;
+        if (typeof window.scrollY === 'undefined')
+            return;
         if (!this.isDomLoadedEventBinded) {
             document.addEventListener("DOMContentLoaded", () => {
                 var _a;
-                if (typeof requestAnimationFrame !== 'function')
-                    return;
                 this.insertSymbolHTML();
-                this.scrollEventHandler = (e) => this.scrollAnimate();
+                this.scrollEventHandler = () => this.scrollAnimate();
                 window.addEventListener('scroll', this.scrollEventHandler);
-                (_a = document.getElementById(this.arrowId)) === null || _a === void 0 ? void 0 : _a.addEventListener('click', () => {
+                (_a = document.getElementById(this.elementId)) === null || _a === void 0 ? void 0 : _a.addEventListener('click', (e) => {
                     this.scrollToTop();
                 });
             });
@@ -29,6 +31,10 @@ export class ScrollTop {
         }
         else {
             window.addEventListener('scroll', this.scrollEventHandler);
+            const el = document.getElementById(this.elementId);
+            if (!!el) {
+                el.style.display = "block";
+            }
             this.isLoaded = true;
         }
     }
@@ -37,8 +43,11 @@ export class ScrollTop {
             return;
         window.removeEventListener('scroll', this.scrollEventHandler);
         this.isLoaded = false;
-        const el = document.getElementById(this.arrowId);
-        this.fadeOut(el, false);
+        const el = document.getElementById(this.elementId);
+        if (!!el) {
+            el.style.opacity = "0";
+            el.style.display = "none";
+        }
         this.displaying = false;
     }
     setOptions(options) {
@@ -52,13 +61,54 @@ export class ScrollTop {
         }
     }
     scrollAnimate() {
-        if (!this.ticking) {
-            window.requestAnimationFrame(() => {
-                this.fadeInOutByScrollY(this.getScrollY());
-                this.ticking = false;
-            });
-            this.ticking = true;
+        if (this.isRunningScrollRaf) {
+            return;
         }
+        const run = () => {
+            this.fadeInOutByScrollY(this.getScrollY());
+            this.isRunningScrollRaf = false;
+        };
+        this.isRunningScrollRaf = true;
+        requestAnimationFrame(run);
+    }
+    insertSymbolHTML() {
+        var _a;
+        const html = `<div class="st-scrolltop-wrap"><div id="${this.elementId}" class="st-scrolltop">
+        <div class="st-arrow"></div>
+      </div></div>`;
+        (_a = document.querySelector("body")) === null || _a === void 0 ? void 0 : _a.insertAdjacentHTML('beforeend', html);
+    }
+    fadeInOutByScrollY(scrollY) {
+        if (typeof scrollY === 'undefined') {
+            if (this.isDebug) {
+                this.debugLog('scroll Y is undefined');
+            }
+            return;
+        }
+        if (this.isDebug) {
+            this.debugLog('scroll Y : ', scrollY);
+        }
+        if (scrollY > this.scrollBase) {
+            if (this.displaying === false) {
+                const el = document.getElementById(this.elementId);
+                if (!!el) {
+                    el.style.opacity = "0.3";
+                }
+                this.displaying = true;
+            }
+        }
+        else {
+            if (this.displaying === true) {
+                const el = document.getElementById(this.elementId);
+                if (!!el) {
+                    el.style.opacity = "0";
+                }
+                this.displaying = false;
+            }
+        }
+    }
+    getScrollY() {
+        return window.scrollY;
     }
     scrollToTop() {
         const supportsNativeSmoothScroll = 'scrollBehavior' in document.documentElement.style;
@@ -83,91 +133,18 @@ export class ScrollTop {
             smoothScroll(this.getScrollY());
         }
     }
-    insertSymbolHTML() {
-        var _a;
-        const html = `<div class="st-scrolltop-wrap"><div id="${this.arrowId}" class="scrolltop" style="display:none">
-		<div class="arrow"></div>
-	  </div></div>`;
-        (_a = document.querySelector("body")) === null || _a === void 0 ? void 0 : _a.insertAdjacentHTML('beforeend', html);
-    }
-    fadeInOutByScrollY(scrollY) {
-        if (typeof scrollY === 'undefined') {
-            this.debugLog(`scroll Y : ${scrollY}`);
-        }
-        else if (this.isDebug) {
-            this.debugLog(`scroll Y : ${scrollY}`);
-        }
-        if (scrollY > this.scrollBase) {
-            if (this.displaying === false) {
-                const el = document.getElementById(this.arrowId);
-                this.fadeIn(el, 0.3);
-                this.displaying = true;
-            }
-        }
-        else {
-            if (this.displaying === true) {
-                const el = document.getElementById(this.arrowId);
-                this.fadeOut(el);
-                this.displaying = false;
-            }
-        }
-    }
-    getScrollY() {
-        return window.pageYOffset;
-    }
-    fadeIn(el, _opacity = 1, smooth = true, displayStyle = 'block') {
-        if (!!!el)
+    debugLog(..._args) {
+        if (!this.isDebug)
             return;
-        el.style.opacity = 0;
-        el.style.display = displayStyle;
-        if (smooth) {
-            let opacity = 0;
-            let request;
-            const animation = () => {
-                opacity += 0.02;
-                if (opacity >= _opacity) {
-                    opacity = _opacity;
-                    cancelAnimationFrame(request);
-                }
-                el.style.opacity = opacity;
-            };
-            const rAf = () => {
-                request = requestAnimationFrame(rAf);
-                animation();
-            };
-            rAf();
-        }
-        else {
-            el.style.opacity = 1;
-        }
-    }
-    fadeOut(el, smooth = true, displayStyle = 'none') {
-        if (!!!el)
-            return;
-        if (smooth) {
-            let opacity = el.style.opacity;
-            let request;
-            const animation = () => {
-                opacity -= 0.04;
-                if (opacity <= 0) {
-                    opacity = 0;
-                    el.style.display = displayStyle;
-                    cancelAnimationFrame(request);
-                }
-                el.style.opacity = opacity;
-            };
-            const rAf = () => {
-                request = requestAnimationFrame(rAf);
-                animation();
-            };
-            rAf();
-        }
-        else {
-            el.style.opacity = 0;
-        }
-    }
-    debugLog(msg) {
-        if (this.isDebug)
-            console.log('[ScrollTop] ', msg);
+        const tag = '[ScrollTop]';
+        const args = _args.map((x) => {
+            if (typeof x === 'object') {
+                return JSON.parse(JSON.stringify(x));
+            }
+            else {
+                return x;
+            }
+        });
+        console.log(tag, ...args);
     }
 }
