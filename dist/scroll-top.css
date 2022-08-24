@@ -3,9 +3,9 @@
   font-size: 1rem;
   box-sizing: border-box;
 }
-.st-scrolltop-wrap > .scrolltop {
+.st-scrolltop-wrap > .st-scrolltop {
   background-color: rgb(98, 138, 199);
-  opacity: 0.3;
+  opacity: 0;
   height: 3.75em;
   width: 3.75em;
   bottom: 2.18em;
@@ -18,12 +18,14 @@
   z-index: 9999;
   box-sizing: inherit;
   font-size: inherit;
+  transition: opacity 0.5s ease;
 }
-.st-scrolltop-wrap > .scrolltop:hover {
+.st-scrolltop-wrap > .st-scrolltop:hover {
   background-color: rgb(103, 153, 232);
   opacity: 0.7 !important;
+  transition: none;
 }
-.st-scrolltop-wrap > .scrolltop > .arrow {
+.st-scrolltop-wrap > .st-scrolltop > .st-arrow {
   border: solid white;
   border-width: 0 0.2em 0.2em 0;
   display: inline-block;
