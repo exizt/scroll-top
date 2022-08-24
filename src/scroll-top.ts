@@ -101,38 +101,6 @@ export class ScrollTop {
 			})
 			this.ticking = true
 		}
-	}
-
-	/**
-	 * 상단으로 스크롤.
-	 */
-	scrollToTop(){
-		// https://stackoverflow.com/questions/52276194/window-scrollto-with-options-not-working-on-microsoft-edge
-		const supportsNativeSmoothScroll = 'scrollBehavior' in document.documentElement.style;
-		if (supportsNativeSmoothScroll) {
-			///// 모던 브라우저의 경우
-			// https://developer.mozilla.org/en-US/docs/Web/API/ScrollToOptions/behavior
-			// behavior는 explorer 에서는 안 됨(ie11 에서도 안 됨)
-			this.debugLog('scrollToTop(). behavior smooth.')
-			window.scroll({top:0, behavior: "smooth"})
-		} else {
-			///// 예전 브라우저의 경우 (예: ie11)
-			// https://stackoverflow.com/questions/15935318/smooth-scroll-to-top/48942924
-			// https://stackoverflow.com/questions/42261524/how-to-window-scrollto-with-a-smooth-effect
-			this.debugLog('scrollToTop(). smoothScroll().')
-
-			const smoothScroll = (h:number) => {
-				const i = h || 0;
-				if (i > 10) {
-				  setTimeout(() => {
-					window.scrollTo(0, i);
-					smoothScroll(i * 0.9);
-				  }, 10);
-				} else {
-					window.scrollTo(0, 0);
-				}
-			}
-			smoothScroll(this.getScrollY())
 		}
 	}
 
@@ -248,6 +216,39 @@ export class ScrollTop {
 
 		} else {
 			el.style.opacity = 0;
+		}
+	}
+
+	/**
+	 * 상단으로 스크롤.
+	 */
+	 scrollToTop(){
+		// https://stackoverflow.com/questions/52276194/window-scrollto-with-options-not-working-on-microsoft-edge
+		const supportsNativeSmoothScroll = 'scrollBehavior' in document.documentElement.style;
+		if (supportsNativeSmoothScroll) {
+			///// 모던 브라우저의 경우
+			// https://developer.mozilla.org/en-US/docs/Web/API/ScrollToOptions/behavior
+			// behavior는 explorer 에서는 안 됨(ie11 에서도 안 됨)
+			this.debugLog('scrollToTop(). behavior smooth.')
+			window.scroll({top:0, behavior: "smooth"})
+		} else {
+			///// 예전 브라우저의 경우 (예: ie11)
+			// https://stackoverflow.com/questions/15935318/smooth-scroll-to-top/48942924
+			// https://stackoverflow.com/questions/42261524/how-to-window-scrollto-with-a-smooth-effect
+			this.debugLog('scrollToTop(). smoothScroll().')
+
+			const smoothScroll = (h:number) => {
+				const i = h || 0;
+				if (i > 10) {
+				  setTimeout(() => {
+					window.scrollTo(0, i);
+					smoothScroll(i * 0.9);
+				  }, 10);
+				} else {
+					window.scrollTo(0, 0);
+				}
+			}
+			smoothScroll(this.getScrollY())
 		}
 	}
 
