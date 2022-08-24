@@ -8,7 +8,7 @@
 export class ScrollTop {
 	// 화살표가 나타나는 기준선
 	private scrollBase = 100
-	private arrowId = "shScrollTop"
+	private elementId = "shScrollTop"
 	private displaying = false
 	private isDebug = false
 	// (중복 방지 기능) 기능이 로드되었는지 여부 status. 
@@ -47,7 +47,7 @@ export class ScrollTop {
 				window.addEventListener('scroll', this.scrollEventHandler)
 			
 				// 클릭 이벤트 바인딩
-				document.getElementById(this.arrowId)?.addEventListener('click',()=>{
+				document.getElementById(this.elementId)?.addEventListener('click',()=>{
 					this.scrollToTop()
 				})
 			})
@@ -70,7 +70,7 @@ export class ScrollTop {
 		this.isLoaded = false
 
 		// 화살표시를 hidden 처리
-		const el = document.getElementById(this.arrowId)
+		const el = document.getElementById(this.elementId)
 		this.fadeOut(el, false)
 		this.displaying = false
 	}
@@ -93,6 +93,12 @@ export class ScrollTop {
 	 * 스크롤 이벤트 바인딩
 	 */
 	scrollAnimate(){
+		this.debugLog("scrolling")
+		// 단순히 스크롤 이벤트 바인딩을 할 경우에는, 상황에 따라 렌더링 등에 무리가 갈 수 있다.
+		// 렌더링에 무리가 가지않게 해주는 requestAnimationFrame을 이용하여 
+		// 호출되는 횟수를 적절히 줄여준다.
+		// https://developer.mozilla.org/en-US/docs/Web/API/Document/scroll_event
+		// https://stackoverflow.com/a/44779316
 		if (this.scheduledAnimationFrame) {
 			return
 		}
@@ -109,7 +115,7 @@ export class ScrollTop {
 	 * 화살표를 표시하는 html 요소를 추가
 	 */
 	insertSymbolHTML(){
-		const html = `<div class="st-scrolltop-wrap"><div id="${this.arrowId}" class="scrolltop" style="display:none">
+		const html = `<div class="st-scrolltop-wrap"><div id="${this.elementId}" class="scrolltop" style="display:none">
 		<div class="arrow"></div>
 	  </div></div>`
 		document.querySelector("body")?.insertAdjacentHTML('beforeend', html)
@@ -121,19 +127,23 @@ export class ScrollTop {
 	 */
 	fadeInOutByScrollY(scrollY:number) {
 		if(typeof scrollY === 'undefined'){
-			this.debugLog(`scroll Y : ${scrollY}`)
-		} else if(this.isDebug){
-			this.debugLog(`scroll Y : ${scrollY}`)
+			if(this.isDebug){
+				this.debugLog('scroll Y is undefined')
+			}
+			return
+		}
+		if(this.isDebug){
+			this.debugLog('scroll Y : ', scrollY)
 		}
 		if(scrollY > this.scrollBase){
 			if(this.displaying === false){
-				const el = document.getElementById(this.arrowId)
+				const el = document.getElementById(this.elementId)
 				this.fadeIn(el, 0.3)
 				this.displaying = true
 			}
 		} else {
 			if(this.displaying === true){
-				const el = document.getElementById(this.arrowId)
+				const el = document.getElementById(this.elementId)
 				this.fadeOut(el)
 				this.displaying = false
 			}
@@ -158,6 +168,7 @@ export class ScrollTop {
 	 * @param _opacity 
 	 * @param smooth 
 	 * @param displayStyle 
+	 * @deprecated
 	 */
 	fadeIn(el:any, _opacity = 1, smooth = true, displayStyle = 'block') {
 		if(!!!el) return
@@ -192,6 +203,7 @@ export class ScrollTop {
 	 * @param el 
 	 * @param smooth 
 	 * @param displayStyle 
+	 * @deprecated
 	 */
 	fadeOut(el:any, smooth = true, displayStyle = 'none'){
 		if(!!!el) return
@@ -255,10 +267,20 @@ export class ScrollTop {
 
 	/**
 	 * 디버깅 로그
-	 * @param msg 디버깅 로그
+	 * @param _args 디버깅 로그
 	 */
-	debugLog(msg:string){
-		if(this.isDebug) console.log('[ScrollTop] ', msg)
+	debugLog(..._args:any){
+		if (this.isDebug) {
+            const tag = '[ScrollTop]'
+			const args = _args.map((x: any) => {
+				if(typeof x === 'object'){
+					return JSON.parse(JSON.stringify(x))
+				} else {
+					return x
+				}
+			})
+			console.log(tag, ...args)
+        }
 	}
 }
 interface IOptions {
