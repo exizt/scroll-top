@@ -20,7 +20,7 @@
     "webpack": "npx webpack --mode production",
     "webpack.dev": "npx webpack --mode development",
     "dist.css": "shx cp ./src/css/scroll-top.css ./dist",
-    "make.ghpages": "shx cp ./index.html ./docs/ & shx cp ./dist/scroll-top.mix.js ./docs/dist/ &"
+    "make.ghpages": "shx cp -r index.html dist docs/"
   },
   "devDependencies": {
     "css-loader": "^6.7.1",
