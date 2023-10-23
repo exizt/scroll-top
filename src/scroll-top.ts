@@ -26,9 +26,9 @@ export class ScrollTop {
      * 이벤트 바인딩
      */
     load(options?:IOptions): void {
-        this.debugLog('load')
+        this.debug('load')
         if( !this.isSupported() ){
-            this.debugLog('load')
+            this.debug('load')
             return
         }
 
@@ -139,12 +139,12 @@ export class ScrollTop {
     private fadeInOutByScrollY(scrollY:number) {
         if(typeof scrollY === 'undefined'){
             if(this.isDebug){
-                this.debugLog('scroll Y is undefined')
+                this.debug('scroll Y is undefined')
             }
             return
         }
         if(this.isDebug){
-            this.debugLog('scroll Y : ', scrollY)
+            this.debug('scroll Y : ', scrollY)
         }
         if(scrollY > this.scrollBase) {
             if(this.displaying === false) {
@@ -208,7 +208,7 @@ export class ScrollTop {
         ///// 모던 브라우저의 경우
         // https://developer.mozilla.org/en-US/docs/Web/API/Window/scroll
         // behavior는 explorer 에서는 안 됨(ie11 에서도 안 됨)
-        this.debugLog('scrollToTop(). behavior smooth.')
+        this.debug('scrollToTop(). behavior smooth.')
         window.scroll({top:0, behavior: "smooth"})
     }
 
@@ -216,7 +216,7 @@ export class ScrollTop {
      * 디버깅 로그
      * @param _args 디버깅 로그
      */
-    private debugLog(..._args:any) {
+    private debug(..._args:any) {
         if (!this.isDebug) return
         const tag = '[ScrollTop]'
         const args = _args.map((x: any) => {
