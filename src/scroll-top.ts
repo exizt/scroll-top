@@ -106,7 +106,7 @@ export class ScrollTop {
     private scrollAnimate(){
         // 사용자가 스크롤 이벤트를 하는 데에는 문제가 없으나, scroll() 등으로 이동 중에 
         // 무리가 발생할 수 있으므로, 이를 예방하기 위해 requestAnimationFrame을 사용한다.
-        // requestAnimiationFrame은 1/60s 정도로 동작된다는 듯.
+        // requestAnimationFrame은 1/60s 정도로 동작된다는 듯.
         // 최근 브라우저에서는 사용하지 않아도 큰 문제는 없는 듯..
         // https://developer.mozilla.org/en-US/docs/Web/API/Document/scroll_event
         // https://stackoverflow.com/a/44779316
