@@ -14,7 +14,7 @@ export class ScrollTop {
     // (중복 방지 기능) 기능이 로드되었는지 여부 status. 
     private isLoaded = false
     // (중복 방지 기능) DOMContentLoaded 이벤트 바인딩 여부 status.
-    private isDomLoadedEventBinded = false
+    private hasDomEventBinding = false
     // (중복 방지 기능) animationFrame 중복 방지 status.
     private isRunningScrollRaf = false
     // 이벤트 핸들러. add, remove를 위해 포인터를 지니기 위함.
@@ -41,7 +41,7 @@ export class ScrollTop {
         if(typeof window.scrollY === 'undefined') return
 
         // domLoaded 이벤트 바인딩
-        if(!this.isDomLoadedEventBinded){
+        if(!this.hasDomEventBinding){
             document.addEventListener("DOMContentLoaded",()=>{
                 
                 // 화살표를 draw
@@ -56,7 +56,7 @@ export class ScrollTop {
                     this.scrollToTop()
                 })
             })
-            this.isDomLoadedEventBinded = true
+            this.hasDomEventBinding = true
             this.isLoaded = true
         } else {
             // scroll 리스너를 재등록
