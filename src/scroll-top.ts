@@ -1,6 +1,6 @@
 /*!
 * ScrollTop
-* 
+*
 * License : MIT
 *     Git : https://github.com/exizt/scroll-top
 *  Author : exizt
@@ -11,7 +11,7 @@ export class ScrollTop {
     private elementId = "shScrollTop"
     private displaying = false
     private isDebug = false
-    // (중복 방지 기능) 기능이 로드되었는지 여부 status. 
+    // (중복 방지 기능) 기능이 로드되었는지 여부 status.
     private isLoaded = false
     // (중복 방지 기능) DOMContentLoaded 이벤트 바인딩 여부 status.
     private hasDomEventBinding = false
@@ -31,7 +31,7 @@ export class ScrollTop {
             this.debugLog('load')
             return
         }
-        
+
         // 옵션이 있을 경우 옵션값 지정
         this.setOptions(options)
 
@@ -41,14 +41,14 @@ export class ScrollTop {
         // domLoaded 이벤트 바인딩
         if(!this.hasDomEventBinding) {
             document.addEventListener("DOMContentLoaded",()=>{
-                
+
                 // 화살표를 draw
                 this.appendSymbolToHTML()
-    
+
                 // scroll 리스너를 등록
                 this.scrollEventHandler = () => this.scrollAnimate()
                 window.addEventListener('scroll', this.scrollEventHandler)
-            
+
                 // 클릭 이벤트 바인딩
                 document.getElementById(this.elementId)?.addEventListener('click',(e)=>{
                     this.scrollToTop()
@@ -72,7 +72,7 @@ export class ScrollTop {
      */
     unload(): void {
         if(!this.isLoaded) return
-        
+
         // 스크롤 이벤트에서 해제
         window.removeEventListener('scroll', this.scrollEventHandler)
         this.isLoaded = false
@@ -104,7 +104,7 @@ export class ScrollTop {
      * 스크롤 이벤트 바인딩
      */
     private scrollAnimate(){
-        // 사용자가 스크롤 이벤트를 하는 데에는 문제가 없으나, scroll() 등으로 이동 중에 
+        // 사용자가 스크롤 이벤트를 하는 데에는 문제가 없으나, scroll() 등으로 이동 중에
         // 무리가 발생할 수 있으므로, 이를 예방하기 위해 requestAnimationFrame을 사용한다.
         // requestAnimationFrame은 1/60s 정도로 동작된다는 듯.
         // 최근 브라우저에서는 사용하지 않아도 큰 문제는 없는 듯..
@@ -164,7 +164,7 @@ export class ScrollTop {
             }
         }
     }
-    
+
     /**
      * y 좌표를 구함
      * (ie 9 이상. ie에서는 window.pageYOffset을 이용함. 모던브라우저에서는 window.scrollY 또는 window.pageYOffset 이용)
