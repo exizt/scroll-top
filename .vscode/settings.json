@@ -8,5 +8,5 @@
         "**/LICENSE": true,
         "**/package-lock.json": true
     },
-    "liveSassCompile.settings.generateMap": false
+    "liveSassCompile.settings.generateMap": false,
 }

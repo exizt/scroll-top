@@ -5,28 +5,26 @@ export class ScrollTop {
         this.displaying = false;
         this.isDebug = false;
         this.isLoaded = false;
-        this.isDomLoadedEventBinded = false;
+        this.hasDomEventBinding = false;
         this.isRunningScrollRaf = false;
     }
     load(options) {
+        if (!this.isSupported())
+            return;
         this.setOptions(options);
         if (this.isLoaded)
             return;
-        if (typeof requestAnimationFrame !== 'function')
-            return;
-        if (typeof window.scrollY === 'undefined')
-            return;
-        if (!this.isDomLoadedEventBinded) {
+        if (!this.hasDomEventBinding) {
             document.addEventListener("DOMContentLoaded", () => {
                 var _a;
-                this.insertSymbolHTML();
+                this.appendSymbolToHTML();
                 this.scrollEventHandler = () => this.scrollAnimate();
                 window.addEventListener('scroll', this.scrollEventHandler);
                 (_a = document.getElementById(this.elementId)) === null || _a === void 0 ? void 0 : _a.addEventListener('click', (e) => {
                     this.scrollToTop();
                 });
             });
-            this.isDomLoadedEventBinded = true;
+            this.hasDomEventBinding = true;
             this.isLoaded = true;
         }
         else {
@@ -71,7 +69,7 @@ export class ScrollTop {
         this.isRunningScrollRaf = true;
         requestAnimationFrame(run);
     }
-    insertSymbolHTML() {
+    appendSymbolToHTML() {
         var _a;
         const html = `<div class="st-scrolltop-wrap"><div id="${this.elementId}" class="st-scrolltop">
         <div class="st-arrow"></div>
@@ -110,28 +108,15 @@ export class ScrollTop {
     getScrollY() {
         return window.scrollY;
     }
+    isSupported() {
+        const isSmoothScrollSupported = 'scrollBehavior' in document.documentElement.style;
+        const isRequestAnimationFrameSupported = (!!window.requestAnimationFrame);
+        const isScrollYSupported = (!!window.scrollY);
+        return isSmoothScrollSupported && isRequestAnimationFrameSupported && isScrollYSupported;
+    }
     scrollToTop() {
-        const supportsNativeSmoothScroll = 'scrollBehavior' in document.documentElement.style;
-        if (supportsNativeSmoothScroll) {
-            this.debugLog('scrollToTop(). behavior smooth.');
-            window.scroll({ top: 0, behavior: "smooth" });
-        }
-        else {
-            this.debugLog('scrollToTop(). smoothScroll().');
-            const smoothScroll = (h) => {
-                const i = h || 0;
-                if (i > 10) {
-                    setTimeout(() => {
-                        window.scrollTo(0, i);
-                        smoothScroll(i * 0.9);
-                    }, 10);
-                }
-                else {
-                    window.scrollTo(0, 0);
-                }
-            };
-            smoothScroll(this.getScrollY());
-        }
+        this.debugLog('scrollToTop(). behavior smooth.');
+        window.scroll({ top: 0, behavior: "smooth" });
     }
     debugLog(..._args) {
         if (!this.isDebug)

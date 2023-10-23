@@ -4,7 +4,7 @@ export declare class ScrollTop {
     private displaying;
     private isDebug;
     private isLoaded;
-    private isDomLoadedEventBinded;
+    private hasDomEventBinding;
     private isRunningScrollRaf;
     private scrollEventHandler;
     constructor();
@@ -12,9 +12,10 @@ export declare class ScrollTop {
     unload(): void;
     private setOptions;
     private scrollAnimate;
-    private insertSymbolHTML;
+    private appendSymbolToHTML;
     private fadeInOutByScrollY;
     private getScrollY;
+    private isSupported;
     private scrollToTop;
     private debugLog;
 }
