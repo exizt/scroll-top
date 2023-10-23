@@ -4,15 +4,18 @@ export class ScrollTop {
         this.elementId = "shScrollTop";
         this.displaying = false;
         this.isDebug = false;
-        this.isLoaded = false;
+        this.hasLoadCalled = false;
         this.hasDomEventBinding = false;
         this.isRunningScrollRaf = false;
     }
     load(options) {
-        if (!this.isSupported())
+        this.debug('load');
+        if (!this.isSupported()) {
+            this.debug('load');
             return;
+        }
         this.setOptions(options);
-        if (this.isLoaded)
+        if (this.hasLoadCalled)
             return;
         if (!this.hasDomEventBinding) {
             document.addEventListener("DOMContentLoaded", () => {
@@ -25,7 +28,7 @@ export class ScrollTop {
                 });
             });
             this.hasDomEventBinding = true;
-            this.isLoaded = true;
+            this.hasLoadCalled = true;
         }
         else {
             window.addEventListener('scroll', this.scrollEventHandler);
@@ -33,14 +36,14 @@ export class ScrollTop {
             if (!!el) {
                 el.style.display = "block";
             }
-            this.isLoaded = true;
+            this.hasLoadCalled = true;
         }
     }
     unload() {
-        if (!this.isLoaded)
+        if (!this.hasLoadCalled)
             return;
         window.removeEventListener('scroll', this.scrollEventHandler);
-        this.isLoaded = false;
+        this.hasLoadCalled = false;
         const el = document.getElementById(this.elementId);
         if (!!el) {
             el.style.opacity = "0";
@@ -79,12 +82,12 @@ export class ScrollTop {
     fadeInOutByScrollY(scrollY) {
         if (typeof scrollY === 'undefined') {
             if (this.isDebug) {
-                this.debugLog('scroll Y is undefined');
+                this.debug('scroll Y is undefined');
             }
             return;
         }
         if (this.isDebug) {
-            this.debugLog('scroll Y : ', scrollY);
+            this.debug('scroll Y : ', scrollY);
         }
         if (scrollY > this.scrollBase) {
             if (this.displaying === false) {
@@ -115,10 +118,10 @@ export class ScrollTop {
         return isSmoothScrollSupported && isRequestAnimationFrameSupported && isScrollYSupported;
     }
     scrollToTop() {
-        this.debugLog('scrollToTop(). behavior smooth.');
+        this.debug('scrollToTop(). behavior smooth.');
         window.scroll({ top: 0, behavior: "smooth" });
     }
-    debugLog(..._args) {
+    debug(..._args) {
         if (!this.isDebug)
             return;
         const tag = '[ScrollTop]';

@@ -3,7 +3,7 @@ export declare class ScrollTop {
     private elementId;
     private displaying;
     private isDebug;
-    private isLoaded;
+    private hasLoadCalled;
     private hasDomEventBinding;
     private isRunningScrollRaf;
     private scrollEventHandler;
@@ -17,7 +17,7 @@ export declare class ScrollTop {
     private getScrollY;
     private isSupported;
     private scrollToTop;
-    private debugLog;
+    private debug;
 }
 interface IOptions {
     base: number;
