@@ -1,10 +1,5 @@
-# scroll-top
+# ScrollTop JS
 > 스크롤을 상위로 올리는 화살표를 화면 우측 하단에 만들어주는 스크립트.
-
-
-# License
-
-MIT License
 
 
 # 데모
@@ -34,7 +29,7 @@ https://exizt.github.io/scroll-top/
 
 ### npm, typescript에서 이용할 때
 npm 패키지 설치
-```console
+```shell
 npm install --save-dev exizt.scroll-top
 ```
 
@@ -46,7 +41,7 @@ scrolltop.load()
 ```
 
 ## 옵션
-예시)
+(예시)
 ```js
 scrolltop.load({base:300})
 ```
@@ -54,4 +49,9 @@ scrolltop.load({base:300})
 옵션값
 | 옵션명 | 유형 | 기본값 | 설명 | 
 | --- | --- | --- | :--- |
-| base | number | 100 | 화살표가 나타나는 지점 |
+| base | number | 100 | 화살표가 나타나는 최소 높이 |
+
+
+# License
+
+MIT License
