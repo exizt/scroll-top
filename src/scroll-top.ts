@@ -20,14 +20,17 @@ export class ScrollTop {
     // 이벤트 핸들러. add, remove를 위해 포인터를 지니기 위함.
     private scrollEventHandler!: EventListener
 
-    constructor(){
-    }
+    constructor(){ }
 
     /**
      * 이벤트 바인딩
      */
     load(options?:IOptions): void {
-        if( !this.isSupported() ) return
+        this.debugLog('load')
+        if( !this.isSupported() ){
+            this.debugLog('load')
+            return
+        }
         
         // 옵션이 있을 경우 옵션값 지정
         this.setOptions(options)
@@ -35,17 +38,12 @@ export class ScrollTop {
         // 중복 로드 방지
         if(this.isLoaded) return
 
-        // requestAnimationFrame은 ie10 이상
-        // https://developer.mozilla.org/ko/docs/Web/API/Window/requestAnimationFrame
-        if(typeof requestAnimationFrame !== 'function') return
-        if(typeof window.scrollY === 'undefined') return
-
         // domLoaded 이벤트 바인딩
         if(!this.hasDomEventBinding) {
             document.addEventListener("DOMContentLoaded",()=>{
                 
                 // 화살표를 draw
-                this.insertSymbolHTML()
+                this.appendSymbolToHTML()
     
                 // scroll 리스너를 등록
                 this.scrollEventHandler = () => this.scrollAnimate()
@@ -127,7 +125,7 @@ export class ScrollTop {
     /**
      * 화살표를 표시하는 html 요소를 추가
      */
-    private insertSymbolHTML(){
+    private appendSymbolToHTML(){
         const html = `<div class="st-scrolltop-wrap"><div id="${this.elementId}" class="st-scrolltop">
         <div class="st-arrow"></div>
       </div></div>`
@@ -181,12 +179,26 @@ export class ScrollTop {
         return window.scrollY
     }
 
+    /**
+     * 지원 여부 확인
+     * @returns {boolean} 지원 여부
+     */
     private isSupported(): boolean {
         // https://stackoverflow.com/questions/52276194/window-scrollto-with-options-not-working-on-microsoft-edge
         // https://developer.mozilla.org/en-US/docs/Web/API/Window/scroll
         // behavior는 explorer 에서는 안 됨(ie11 에서도 안 됨)
-        const supportsNativeSmoothScroll = 'scrollBehavior' in document.documentElement.style;
-        return supportsNativeSmoothScroll
+        const isSmoothScrollSupported = 'scrollBehavior' in document.documentElement.style;
+
+        // requestAnimationFrame은 ie10 이상
+        // https://developer.mozilla.org/ko/docs/Web/API/Window/requestAnimationFrame
+        // if(typeof requestAnimationFrame !== 'function') return
+        const isRequestAnimationFrameSupported = (!!window.requestAnimationFrame)
+
+        // scrollY 함수가 있는지 여부
+        const isScrollYSupported = (!! window.scrollY )
+
+        // return
+        return isSmoothScrollSupported && isRequestAnimationFrameSupported && isScrollYSupported
     }
 
     /**
