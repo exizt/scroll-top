@@ -3,6 +3,8 @@
 
 # Don't diff
 package-lock.json text -diff
+*.mix.js text -diff
+
 
 # ignore github repo languages
 *.js linguist-vendored
