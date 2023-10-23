@@ -8,11 +8,14 @@
 export class ScrollTop {
     // 화살표가 나타나는 기준선
     private scrollBase = 100
+    // 엘리먼트 Id
     private elementId = "shScrollTop"
+//
     private displaying = false
+    // 디버깅 여부
     private isDebug = false
     // (중복 방지 기능) 기능이 로드되었는지 여부 status.
-    private isLoaded = false
+    private hasLoadCalled = false
     // (중복 방지 기능) DOMContentLoaded 이벤트 바인딩 여부 status.
     private hasDomEventBinding = false
     // (중복 방지 기능) animationFrame 중복 방지 status.
@@ -32,16 +35,15 @@ export class ScrollTop {
             return
         }
 
-        // 옵션이 있을 경우 옵션값 지정
+        // 옵션값 지정
         this.setOptions(options)
 
-        // 중복 로드 방지
-        if(this.isLoaded) return
+        // load 함수가 호출되었다면 종료. 중복 로드 방지
+        if (this.hasLoadCalled) return
 
         // domLoaded 이벤트 바인딩
         if(!this.hasDomEventBinding) {
             document.addEventListener("DOMContentLoaded",()=>{
-
                 // 화살표를 draw
                 this.appendSymbolToHTML()
 
@@ -55,7 +57,7 @@ export class ScrollTop {
                 })
             })
             this.hasDomEventBinding = true
-            this.isLoaded = true
+            this.hasLoadCalled = true
         } else {
             // scroll 리스너를 재등록
             window.addEventListener('scroll', this.scrollEventHandler)
@@ -63,7 +65,7 @@ export class ScrollTop {
             if(!!el){
                 el.style.display = "block"
             }
-            this.isLoaded = true
+            this.hasLoadCalled = true
         }
     }
 
@@ -71,15 +73,18 @@ export class ScrollTop {
      * 스크롤 이벤트 해제 등. 기능 정지.
      */
     unload(): void {
-        if(!this.isLoaded) return
+        // load 함수가 호출된 적이 없다면 unload 함수는 실행하지 않음
+        if ( !this.hasLoadCalled ) return
 
         // 스크롤 이벤트에서 해제
         window.removeEventListener('scroll', this.scrollEventHandler)
-        this.isLoaded = false
+
+        // load 함수 호출 상태를 false
+        this.hasLoadCalled = false
 
         // 화살표시를 hidden 처리
         const el = document.getElementById(this.elementId)
-        if(!!el){
+        if (!!el) {
             el.style.opacity = "0"
             el.style.display = "none"
         }
@@ -90,7 +95,7 @@ export class ScrollTop {
      * 옵션값 지정
      * @param options 옵션값 JSON
      */
-    private setOptions(options?:IOptions): void{
+    private setOptions(options?:IOptions): void {
         if(!options) return
         if(options.base) {
             this.scrollBase = options.base
@@ -136,7 +141,7 @@ export class ScrollTop {
      * scroll event 에서 fadeIn, fadeOut 설정
      * @param scrollY 스크롤 Y 좌표
      */
-    private fadeInOutByScrollY(scrollY:number) {
+    private fadeInOutByScrollY(scrollY: number) {
         if(typeof scrollY === 'undefined'){
             if(this.isDebug){
                 this.debug('scroll Y is undefined')
