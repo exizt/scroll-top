@@ -41,7 +41,7 @@ export class ScrollTop {
         if(typeof window.scrollY === 'undefined') return
 
         // domLoaded 이벤트 바인딩
-        if(!this.hasDomEventBinding){
+        if(!this.hasDomEventBinding) {
             document.addEventListener("DOMContentLoaded",()=>{
                 
                 // 화살표를 draw
@@ -94,10 +94,10 @@ export class ScrollTop {
      */
     private setOptions(options?:IOptions): void{
         if(!options) return
-        if(options.base){
+        if(options.base) {
             this.scrollBase = options.base
         }
-        if(options.isDebug){
+        if(options.isDebug) {
             this.isDebug = options.isDebug
         }
     }
@@ -148,8 +148,8 @@ export class ScrollTop {
         if(this.isDebug){
             this.debugLog('scroll Y : ', scrollY)
         }
-        if(scrollY > this.scrollBase){
-            if(this.displaying === false){
+        if(scrollY > this.scrollBase) {
+            if(this.displaying === false) {
                 const el = document.getElementById(this.elementId)
                 if(!!el){
                     el.style.opacity = "0.3"
@@ -157,9 +157,9 @@ export class ScrollTop {
                 this.displaying = true
             }
         } else {
-            if(this.displaying === true){
+            if(this.displaying === true) {
                 const el = document.getElementById(this.elementId)
-                if(!!el){
+                if(!!el) {
                     el.style.opacity = "0"
                 }
                 this.displaying = false
@@ -176,12 +176,12 @@ export class ScrollTop {
      * https://developer.mozilla.org/en-US/docs/Web/API/Window/scrollY
      * @returns number
      */
-    private getScrollY():number{
+    private getScrollY(): number {
         // return window.pageYOffset
         return window.scrollY
     }
 
-    private isSupported(){
+    private isSupported(): boolean {
         // https://stackoverflow.com/questions/52276194/window-scrollto-with-options-not-working-on-microsoft-edge
         // https://developer.mozilla.org/en-US/docs/Web/API/Window/scroll
         // behavior는 explorer 에서는 안 됨(ie11 에서도 안 됨)
@@ -192,7 +192,7 @@ export class ScrollTop {
     /**
      * 상단으로 스크롤.
      */
-    private scrollToTop(){
+    private scrollToTop() {
         ///// 모던 브라우저의 경우
         // https://developer.mozilla.org/en-US/docs/Web/API/Window/scroll
         // behavior는 explorer 에서는 안 됨(ie11 에서도 안 됨)
@@ -204,7 +204,7 @@ export class ScrollTop {
      * 디버깅 로그
      * @param _args 디버깅 로그
      */
-    private debugLog(..._args:any){
+    private debugLog(..._args:any) {
         if (!this.isDebug) return
         const tag = '[ScrollTop]'
         const args = _args.map((x: any) => {
