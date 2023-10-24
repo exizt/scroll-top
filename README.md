@@ -9,19 +9,40 @@
 1. Download and place the files in a project directory.
 2. using `dist/scroll-top.mix.js` file.
 
+
+## Usage
 html
 ```html
-<script type="module" src="scroll-top.mix.js"></script>
+<script type="module" src="dist/scroll-top.mix.js"></script>
+```
+
+or
+
+```html
+<link rel="stylesheet" href="dist/scroll-top.css">
+<script type="module">
+  import { ScrollTop } from 'dist/scroll-top.js';
+  const scrolltop = new ScrollTop()
+  scrolltop.load()
+</script>
 ```
 
 
 ## Options
+Option List
+- `base`: Minimum height value for symbol visibility.
+  - (type `number`, default `100`)
+- `debug` : debug log..
+  - (type `boolean`, default `false`)
+
+
 (example)
 ```js
 scrolltop.load({
   base:300
 })
 ```
+
 
 ### How to use option
 #### html, js
@@ -46,11 +67,6 @@ import { ScrollTop } from 'exizt.scroll-top'
 const scrolltop = new ScrollTop()
 scrolltop.load()
 ```
-
-### Options
-Options
-- `base`: Minimum height value for symbol visibility.
-  - (type `number`, default `100`)
 
 
 ## License
