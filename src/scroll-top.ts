@@ -1,9 +1,9 @@
-/*!
+/**
 * ScrollTop
 *
-* License : MIT
-*     Git : https://github.com/exizt/scroll-top
-*  Author : exizt
+*  @license MIT
+*  @author exizt
+* https://github.com/exizt/scroll-top
 */
 export class ScrollTop {
     // 버전 정보
