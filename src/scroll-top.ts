@@ -35,7 +35,7 @@ export class ScrollTop {
         this.setOptions(options)
 
         // debug
-        this.debug('load')
+        this.debug('loaded')
 
         // 지원 여부 확인
         if( !this.isSupported() ){
@@ -94,20 +94,6 @@ export class ScrollTop {
             el.style.display = "none"
         }
         this.displaying = false
-    }
-
-    /**
-     * 옵션값 지정
-     * @param options 옵션값 JSON
-     */
-    private setOptions(options?:IOptions): void {
-        if(!options) return
-        if(options.base) {
-            this.scrollBase = options.base
-        }
-        if(options.isDebug) {
-            this.isDebug = options.isDebug
-        }
     }
 
     /**
@@ -221,6 +207,20 @@ export class ScrollTop {
         // behavior는 explorer 에서는 안 됨(ie11 에서도 안 됨)
         this.debug('scrollToTop(). behavior smooth.')
         window.scroll({top:0, behavior: "smooth"})
+    }
+
+    /**
+     * 옵션값 지정
+     * @param options 옵션값 JSON
+     */
+    private setOptions(options?:IOptions): void {
+        if(!options) return
+        if(options.base) {
+            this.scrollBase = options.base
+        }
+        if(options.isDebug) {
+            this.isDebug = options.isDebug
+        }
     }
 
     /**
