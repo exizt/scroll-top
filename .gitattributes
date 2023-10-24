@@ -9,3 +9,10 @@ package-lock.json text -diff
 # ignore github repo languages
 *.js linguist-vendored
 *.html linguist-vendored
+
+# ignore github releases
+.github/ export-ignore
+.vscode/ export-ignore
+package-lock.json export-ignore
+devnote.md export-ignore
+docs/ export-ignore
