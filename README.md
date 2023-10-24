@@ -31,9 +31,9 @@ or
 ## Options
 Option List
 - `base`: Minimum height value for symbol visibility.
-  - (type `number`, default `100`)
+    - (type `number`, default `100`)
 - `debug` : debug log..
-  - (type `boolean`, default `false`)
+    - (type `boolean`, default `false`)
 
 
 (example)
