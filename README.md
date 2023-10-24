@@ -1,21 +1,30 @@
 # ScrollTop JS
-> 스크롤을 상위로 올리는 화살표를 화면 우측 하단에 만들어주는 스크립트.
+> The script that creates an arrow in the bottom-right corner of the screen to scroll back to the top.
 
 * Github: https://github.com/exizt/scroll-top/
 * Demo : https://exizt.github.io/scroll-top/
 
 
-## 사용법
-1. 다운로드합니다. (Github: `Code` - `Download ZIP`)
-2. `dist/scroll-top.mix.js` 파일을 이용합니다. 
+## Download and Setup
+1. Download and place the files in a project directory.
+2. using `dist/scroll-top.mix.js` file.
+
+html
 ```html
 <script type="module" src="scroll-top.mix.js"></script>
 ```
 
 
-## 커스텀
-### 방법
-#### html, js에서 이용할 때
+## Options
+(example)
+```js
+scrolltop.load({
+  base:300
+})
+```
+
+### How to use option
+#### html, js
 ```html
 <link rel="stylesheet" href="../dist/scroll-top.css">
 <script type="module">
@@ -25,29 +34,23 @@
 </script>
 ```
 
-#### npm, typescript에서 이용할 때
-npm 패키지 설치
+#### npm, typescript
+npm
 ```shell
 npm install --save-dev exizt.scroll-top
 ```
 
-ts 파일에서
+TypeScript
 ```ts
 import { ScrollTop } from 'exizt.scroll-top'
 const scrolltop = new ScrollTop()
 scrolltop.load()
 ```
 
-### 옵션
-(예시)
-```js
-scrolltop.load({base:300})
-```
-
-옵션값
-| 옵션명 | 유형 | 기본값 | 설명 | 
-| --- | --- | --- | :--- |
-| base | number | 100 | 화살표가 나타나는 최소 높이 |
+### Options
+Options
+- `base`: Minimum height value for symbol visibility.
+  - (type `number`, default `100`)
 
 
 ## License
