@@ -15,11 +15,10 @@
     "dist"
   ],
   "scripts": {
-    "build": "npm run tsc & npm run dist.css & npm run webpack && npm run make.ghpages & ",
-    "tsc": "tsc ./src/scroll-top.ts --outDir ./dist --target es2016 --declaration --removeComments",
+    "build": "tsc & npm run webpack && npm run make.ghpages & ",
+    "tsc": "tsc",
     "webpack": "npx webpack --mode production",
     "webpack.dev": "npx webpack --mode development",
-    "dist.css": "shx cp ./src/css/scroll-top.css ./dist",
     "make.ghpages": "shx cp -r index.html dist docs/"
   },
   "devDependencies": {

@@ -2,7 +2,7 @@ const path = require('path');
 
 module.exports = {
   entry: {
-    'scroll-top': path.resolve(__dirname, 'src/mix.index.ts')
+    'scroll-top': path.resolve(__dirname, 'src/mix.js')
   },
   output: {
     filename: '[name].mix.js',
@@ -13,13 +13,6 @@ module.exports = {
   },
   module: {
     rules: [
-      {
-        test: /\.ts$/,
-        exclude: /node_modules/,
-        use: {
-          loader: 'ts-loader',
-        }
-      },
       {
         test: /\.css$/,
         use: ['style-loader', 'css-loader'],

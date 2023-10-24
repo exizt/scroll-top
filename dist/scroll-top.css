@@ -25,7 +25,7 @@
   opacity: 0.7 !important;
   transition: none;
 }
-.st-scrolltop-wrap > .st-scrolltop > .st-arrow {
+.st-scrolltop-wrap > .st-scrolltop > .st-scrolltop-symbol {
   border: solid white;
   border-width: 0 0.2em 0.2em 0;
   display: inline-block;
@@ -36,7 +36,6 @@
   box-sizing: inherit;
   font-size: inherit;
 }
-
 @media (max-width: 2000px) {
   .st-scrolltop-wrap {
     font-size: 0.875rem;

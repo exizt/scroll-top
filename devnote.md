@@ -14,11 +14,16 @@
 
 # 빌드
 - `npm run build` : tsc + webpack
-  - `npm run tsc` : ts -> js, d.ts
+  - `tsc` : ts -> js, d.ts
+    - `src/scroll-top.ts` -> `dist/scroll-top.js`, `dist/scroll-top.d.ts`
   - `npm run webpack` : ts -> mix.js (css 포함)
-  - `npm run dist.css` : copy css to `/dist`
+    - `src/mix.js` -> `dist/scroll-top.mix.js`
   - `npm run make.ghpages` : 깃헙 페이지 관련
+    - `dist/` copy to `docs/dist`
+    - `index.html` copy to `docs/index.html`
 - `npm run webpack.dev` : ts -> mix.js (dev 모드)
+- using `live sass`
+  - `src/scss/*.scss` -> `dist/*.css`
 
 
 

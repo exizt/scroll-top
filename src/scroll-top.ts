@@ -10,7 +10,7 @@ export class ScrollTop {
     private scrollBase = 100
     // 엘리먼트 Id
     private elementId = "shScrollTop"
-//
+    //
     private displaying = false
     // 디버깅 여부
     private isDebug = false
@@ -29,14 +29,17 @@ export class ScrollTop {
      * 이벤트 바인딩
      */
     load(options?:IOptions): void {
-        this.debug('load')
-        if( !this.isSupported() ){
-            this.debug('load')
-            return
-        }
-
         // 옵션값 지정
         this.setOptions(options)
+
+        // debug
+        this.debug('load')
+
+        // 지원 여부 확인
+        if( !this.isSupported() ){
+            this.debug('not supported')
+            return
+        }
 
         // load 함수가 호출되었다면 종료. 중복 로드 방지
         if (this.hasLoadCalled) return
@@ -131,14 +134,15 @@ export class ScrollTop {
      * 화살표를 표시하는 html 요소를 추가
      */
     private appendSymbolToHTML(){
-        const html = `<div class="st-scrolltop-wrap"><div id="${this.elementId}" class="st-scrolltop">
-        <div class="st-arrow"></div>
+        const html = `<div class="st-scrolltop-wrap">
+      <div id="${this.elementId}" class="st-scrolltop">
+        <div class="st-scrolltop-symbol"></div>
       </div></div>`
         document.querySelector("body")?.insertAdjacentHTML('beforeend', html)
     }
 
     /**
-     * scroll event 에서 fadeIn, fadeOut 설정
+     * Scroll이 발생되는 도중에 심볼의 fadeIn/Out에 대한 설정
      * @param scrollY 스크롤 Y 좌표
      */
     private fadeInOutByScrollY(scrollY: number) {
@@ -148,9 +152,9 @@ export class ScrollTop {
             }
             return
         }
-        if(this.isDebug){
-            this.debug('scroll Y : ', scrollY)
-        }
+        // debug
+        this.debug('scroll Y : ', scrollY)
+        // scrollY 가 base 설정값 보다 클 때
         if(scrollY > this.scrollBase) {
             if(this.displaying === false) {
                 const el = document.getElementById(this.elementId)
@@ -197,10 +201,10 @@ export class ScrollTop {
         // requestAnimationFrame은 ie10 이상
         // https://developer.mozilla.org/ko/docs/Web/API/Window/requestAnimationFrame
         // if(typeof requestAnimationFrame !== 'function') return
-        const isRequestAnimationFrameSupported = (!!window.requestAnimationFrame)
+        const isRequestAnimationFrameSupported = (typeof window.requestAnimationFrame !== "undefined")
 
         // scrollY 함수가 있는지 여부
-        const isScrollYSupported = (!! window.scrollY )
+        const isScrollYSupported = (typeof window.scrollY !== "undefined")
 
         // return
         return isSmoothScrollSupported && isRequestAnimationFrameSupported && isScrollYSupported
