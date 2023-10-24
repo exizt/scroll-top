@@ -6,6 +6,8 @@
 *  Author : exizt
 */
 export class ScrollTop {
+    // 버전 정보
+    private version = "4.6"
     // 화살표가 나타나는 기준선
     private scrollBase = 100
     // 엘리먼트 Id

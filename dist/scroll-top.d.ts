@@ -1,4 +1,5 @@
 export declare class ScrollTop {
+    private version;
     private scrollBase;
     private elementId;
     private displaying;

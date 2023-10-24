@@ -1,5 +1,6 @@
 export class ScrollTop {
     constructor() {
+        this.version = "4.6";
         this.scrollBase = 100;
         this.elementId = "shScrollTop";
         this.displaying = false;
