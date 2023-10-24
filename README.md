@@ -11,24 +11,22 @@
 
 
 ## Usage
+### Setup
 html
 ```html
 <script type="module" src="dist/scroll-top.mix.js"></script>
 ```
 
-or
 
+CDN
 ```html
-<link rel="stylesheet" href="dist/scroll-top.css">
-<script type="module">
-  import { ScrollTop } from 'dist/scroll-top.js';
-  const scrolltop = new ScrollTop()
-  scrolltop.load()
-</script>
+<script type="module" src="https://cdn.jsdelivr.net/gh/exizt/scroll-top@main/dist/scroll-top.mix.js"></script>
 ```
 
 
-## Options
+
+### Customize
+#### Options
 Option List
 - `base`: Minimum height value for symbol visibility.
     - (type `number`, default `100`)
@@ -44,28 +42,33 @@ scrolltop.load({
 ```
 
 
-### How to use option
-#### html, js
+#### How to use
+html, js
 ```html
 <link rel="stylesheet" href="../dist/scroll-top.css">
 <script type="module">
-  import { ScrollTop } from '../dist/scroll-top.js';
-  const scrolltop = new ScrollTop()
-  scrolltop.load()
+import { ScrollTop } from '../dist/scroll-top.js';
+
+const scrolltop = new ScrollTop()
+scrolltop.load({
+    base:300
+})
 </script>
 ```
 
-#### npm, typescript
-npm
+
+npm, TypeScript
 ```shell
 npm install --save-dev exizt.scroll-top
 ```
 
-TypeScript
 ```ts
 import { ScrollTop } from 'exizt.scroll-top'
+
 const scrolltop = new ScrollTop()
-scrolltop.load()
+scrolltop.load({
+    base:300
+})
 ```
 
 
