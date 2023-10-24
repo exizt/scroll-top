@@ -13,6 +13,9 @@ package-lock.json text -diff
 # ignore github releases
 .github/ export-ignore
 .vscode/ export-ignore
-package-lock.json export-ignore
-devnote.md export-ignore
 docs/ export-ignore
+src/ export-ignore
+package-lock.json export-ignore
+tsconfig.json export-ignore
+webpack.config.js export-ignore
+devnote.md export-ignore
