@@ -15,7 +15,7 @@
 
 ## Setup
 Development environment setup
-1. git clone: `git@github.com:exizt/scroll-top.git`
+1. git clone: `git clone git@github.com:exizt/scroll-top.git`
 2. `npm install`
     - `node_modules` 생성 및 타입스크립트 환경 구성됨.
 
@@ -40,10 +40,10 @@ Development environment setup
 
 
 ## Versioning
-- rules: `{main}.{minor}.{release_all_count}`
-    - `major` : 큰 변경. 이전 버전과의 호환성이 아예 없음.
-    - `minor` : ts 코드에 사소한 변경. 평범한 코드 변경.
-    - `release_all_count` : (누적 카운팅) 의존성 변경, 환경 변경으로 인한 업데이트. 또는 빌드. 그냥 소소하게 누적 카운팅.
+- rules: `{major}.{minor}.{release_all_count}`
+    - `major` : Major changes. No compatibility with previous versions at all.
+    - `minor` : Minor code changes.
+    - `release_all_count` : Updates or builds due to changes in dependencies, environment modifications, or cumulative counting. Just minor cumulative counting.
 
 
 버전 변경 시 같이 작업할 사항
@@ -53,7 +53,7 @@ Development environment setup
 
 <br><br>
 
-## Dev Project Details
+## Project Details
 
 
 ### dev dependencies configuration

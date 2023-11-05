@@ -4,23 +4,21 @@
   ],
   "compilerOptions": {
     /* Language and Environment */
-    /* (es3, es5, es6/es2015, es2016 ~ es2022, esnext) */
-    "target": "es2016",                                  /* Set the JavaScript language version for emitted JavaScript and include compatible library declarations. */
+    "target": "es2016",             /* 컴파일될 js에 관한 버전 설정 */
 
     /* Modules */
-    /* (none, commonjs, amd, umd, system, es6/es2015, es2020, es2022, esnext, node16, nodenext) */
-    "module": "es2015",                                /* 생성될 module import/export 방식 */
-    "rootDir": "./src",                                /* 소스 파일의 root 경로 */
+    "module": "es2015",             /* 생성될 module import, export 방식 */
+    "rootDir": "./src",             /* 소스 파일의 root 경로 */
 
     /* Emit */
-    "declaration": true,                              /* .d.ts 파일 생성 여부 */
-    "outDir": "./dist",                               /* 결과물이 위치할 경로 */
-    "removeComments": true,                           /* 코멘트 제거 여부 */
+    "declaration": true,            /* .d.ts 파일 생성 여부 */
+    "outDir": "./dist",             /* 결과물이 위치할 경로 */
+    "removeComments": true,         /* 코멘트 제거 여부 */
 
     /* Type Checking */
-    "strict": true,                                      /* Enable all strict type-checking options. */
+    "strict": true,                 /* 엄격한 타입 검사 옵션 */
 
     /* Completeness */
-    "skipLibCheck": true                                 /* Skip type checking all .d.ts files. */
+    "skipLibCheck": true            /* .d.ts 파일의 유형 검사를 건너뜀 */
   }
 }
