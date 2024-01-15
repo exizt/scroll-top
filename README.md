@@ -70,8 +70,3 @@ scrolltop.load({
     base:300
 })
 ```
-
-
-## License
-
-MIT License
